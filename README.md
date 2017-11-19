@@ -5,6 +5,7 @@
 2. [PostgreSQL](https://www.postgresql.org/download/)
 
 ## Setup PostgreSQ
+* [Docs](https://www.postgresql.org/docs/)
 * Launch interative terminal
     * On Linux `sudo -u postgres -i`
     * On macOS `psql postgres`
@@ -33,3 +34,13 @@ spring.datasource.password=@password@
     * `gradlew clean bootRun -Dpassword=PASSWORD_FOR_USER`
 
 * Then go to [localhost](http://localhost) and you should see It works!
+
+## Alter Schema
+* The schema can be altered inside the [schema.sql](./src/main/resources/schema.sql)
+* Some useful docs:
+    * [Constraints](https://www.postgresql.org/docs/9.6/static/ddl-constraints.html#DDL-CONSTRAINTS-PRIMARY-KEYS)
+    * [Data types](https://www.postgresql.org/docs/9.6/static/datatype.html)
+    * [Data definition](https://www.postgresql.org/docs/9.6/static/ddl.html)
+
+## Queries
+* Queries will be placed inside [Constants.java](./src/main/edu/oakland/csi3450/service/Constants.java)
