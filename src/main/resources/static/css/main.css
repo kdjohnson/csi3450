@@ -1,0 +1,23 @@
+.nav {
+    background-color: #2196f3;
+}
+
+.nav .nav-wrapper .brand-logo {
+    padding-left: 5px;
+}
+
+.container .slogan {
+    color: #2962ff !important;
+}
+
+.btn-large.waves-effect.waves-light.book-flight {
+    background-color: #2962ff;
+}
+
+.trip-type {
+    display: flex;
+    margin-bottom: 10px;
+}
+.trip-type p {
+    margin: 10px;
+}
