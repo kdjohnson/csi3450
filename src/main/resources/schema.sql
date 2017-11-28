@@ -24,10 +24,12 @@ CREATE TABLE IF NOT EXISTS airport(
     flight_number varchar(6) NOT NULL
 );
 
+CREATE TYPE wifi_enum AS ENUM ('paid' , 'free', 'no');
+
 CREATE TABLE IF NOT EXISTS services(
 	service_id serial PRIMARY KEY,
     movie varchar(25),
-    wifi enum('paid', 'free', 'no'),
+    wifi wifi_enum,
     meal varchar(25)
 );
 
