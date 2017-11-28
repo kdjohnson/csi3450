@@ -35,8 +35,7 @@ public class DB implements IDB {
 
     RowMapper<Aircraft> aircraftMapper = (rs, rowNum) -> {
         return new Aircraft(rs.getString("aircraft_id"), rs.getDouble("capacity"),
-            rs.getBoolean("delayed"), rs.getString("flight_number"), rs.getDouble("routing_range"),
-            rs.getString("name"));
+            rs.getString("flight_number"), rs.getDouble("routing_range"), rs.getString("name"));
     };
 
     public List<Flight> getFlights() {
@@ -55,6 +54,6 @@ public class DB implements IDB {
     RowMapper<Flight> flightMapper = (rs, rowNum) -> {
         return new Flight(rs.getString("flight_number"), rs.getInt("terminal_number"),
             rs.getString("gate"), rs.getInt("routing"), rs.getString("arrival"),
-            rs.getString("departing"));
+            rs.getString("departing"), rs.getInt("availability"), rs.getString("s"));
     };
 }
