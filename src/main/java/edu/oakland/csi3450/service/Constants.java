@@ -46,36 +46,39 @@ public class Constants {
         new String("INSERT into cancellation VALUES (?, ?)").replaceAll("\\s+", " ");
 
     public static final String DELETE_AIRCRAFT =
-        new String("DELETE FROM aircraft WHERE aircraft_id = ?");
+        new String("DELETE FROM aircraft WHERE aircraft_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_FLIGHT =
-        new String("DELETE FROM flight WHERE flight_number = ?");
+        new String("DELETE FROM flight WHERE flight_number = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_AIRPORT =
-        new String("DELETE FROM airport WHERE airport_id = ?");
+        new String("DELETE FROM airport WHERE airport_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_SERVICE =
-        new String("DELETE FROM services WHERE service_id = ?");
+        new String("DELETE FROM services WHERE service_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_EMPLOYEE =
-        new String("DELETE FROM employee WHERE employee_id = ?");
+        new String("DELETE FROM employee WHERE employee_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_MEMBERSHIP =
-        new String("DELETE FROM membership WHERE membership_id = ?");
+        new String("DELETE FROM membership WHERE membership_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_CUSTOMER =
-        new String("DELETE FROM customer WHERE customer_id = ?");
+        new String("DELETE FROM customer WHERE customer_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_CONTACT =
-        new String("DELETE FROM contact WHERE contact_id = ?");
+        new String("DELETE FROM contact WHERE contact_id = ?").replaceAll("\\s+", " ");
 
-    public static final String DELETE_JOB = new String("DELETE FROM job WHERE = job_id");
+    public static final String DELETE_JOB =
+        new String("DELETE FROM job WHERE = job_id").replaceAll("\\s+", " ");
 
     public static final String DELETE_RESERVATION =
-        new String("DELETE FROM reservation WHERE reservation_id = ?");
+        new String("DELETE FROM reservation WHERE reservation_id = ?").replaceAll("\\s+", " ");
 
-    public static final String DELETE_PAYMENT = new String("DELETE FROM payment WHERE payment_id");
+    public static final String DELETE_PAYMENT =
+        new String("DELETE FROM payment WHERE payment_id").replaceAll("\\s+", " ");
 
     public static final String DELETE_CANCELLATION =
-        new String("DELETE FROM cancellation FROM WHERE reservation_id = ? AND cancel_date = ?");
+        new String("DELETE FROM cancellation FROM WHERE reservation_id = ? AND cancel_date = ?")
+            .replaceAll("\\s+", " ");
 }
