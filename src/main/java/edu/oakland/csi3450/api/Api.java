@@ -32,8 +32,8 @@ public class Api {
     @RequestMapping(value = "aircrafts", produces = "application/json")
     public List<Aircraft> aircrafts() {
         try {
-            List<Flight> aircrafts = db.getAircrafts();
-            return flights;
+            List<Aircraft> aircrafts = db.getAircrafts();
+            return aircrafts;
         } catch (Exception e) {
             throw e;
         }
