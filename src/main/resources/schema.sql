@@ -1,4 +1,4 @@
-DROP TYPE status CASCADE;
+DROP TYPE IF EXISTS status CASCADE;
 CREATE TYPE status AS ENUM ('delayed', 'cancelled', 'on time');
 
 CREATE TABLE IF NOT EXISTS flight (
