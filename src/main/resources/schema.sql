@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS airport(
     flight_number varchar(6) NOT NULL
 );
 
+DROP TYPE IF EXISTS wifi_enum CASCADE;
 CREATE TYPE wifi_enum AS ENUM ('paid' , 'free', 'no');
 
 CREATE TABLE IF NOT EXISTS services(
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS employee(
 	employee_id serial PRIMARY KEY,
     aircraft_id serial REFERENCES aircraft,
     aiport_id serial REFERENCES airport,
-    position_id serial REFERENCES position,
+    job_id serial REFERENCES position,
     e_first_name varchar(25) NOT NULL,
     e_last_name varchar(25) NOT NULL, 
     date_hired date NOT NULL
