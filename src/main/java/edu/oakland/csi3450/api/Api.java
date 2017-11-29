@@ -38,4 +38,24 @@ public class Api {
             throw e;
         }
     }
+
+    @RequestMapping(value = "airports", produces = "application/json")
+    public List<Airport> airports() {
+        try {
+            List<Airport> airports = db.getAirports();
+            return airports;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @RequestMapping(value = "airportIDs", produces = "application/json")
+    public List<String> airportIDs() {
+        try {
+            List<String> airportIDs = db.getAirportIDs();
+            return airportIDs;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

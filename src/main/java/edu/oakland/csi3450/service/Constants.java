@@ -80,4 +80,10 @@ public class Constants {
     public static final String DELETE_CANCELLATION =
         new String("DELETE FROM cancellation FROM WHERE reservation_id = ? AND cancel_date = ?")
             .replaceAll("\\s+", " ");
+
+    public static final String GET_AIRPORTS =
+        new String("SELECT * FROM airport").replaceAll("\\s+", " ");
+
+    public static final String GET_AIRPORT_IDS =
+        new String("SELECT airport_id FROM airport").replaceAll("\\s+", " ");
 }
