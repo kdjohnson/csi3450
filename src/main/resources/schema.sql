@@ -34,6 +34,13 @@ CREATE TABLE IF NOT EXISTS job (
     job_type varchar(25) NOT NULL,
     salary numeric(6) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS payment (
+    invoice_id serial PRIMARY KEY,
+    vendor_name varchar(25) NOT NULL,
+    vendor_id numeric(7) NOT NULL,
+    method varchar(7) NOT NULL
+);
     
 CREATE TABLE IF NOT EXISTS reservation (
     reservation_id serial PRIMARY KEY,
@@ -45,12 +52,6 @@ CREATE TABLE IF NOT EXISTS reservation (
     insurance boolean NOT NULL
 );
     
-CREATE TABLE IF NOT EXISTS payment (
-    invoice_id serial PRIMARY KEY,
-    vendor_name varchar(25) NOT NULL,
-    vendor_id numeric(7) NOT NULL,
-    method varchar(7) NOT NULL
-);
     
 CREATE TABLE IF NOT EXISTS cancellations (
     reservation_id serial references reservation,
@@ -79,17 +80,10 @@ CREATE TABLE IF NOT EXISTS employee (
     employee_id serial PRIMARY KEY,
     aircraft_id serial REFERENCES aircraft,
     airport_id char(3) REFERENCES airport,
-    job_id serial REFERENCES position,
+    job_id serial REFERENCES job,
     e_first_name varchar(25) NOT NULL,
     e_last_name varchar(25) NOT NULL, 
     date_hired date NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS membership (
-    membership_id serial PRIMARY KEY,
-    discount numeric(5),
-    customer_id serial REFERENCES customer,
-    m_type varchar(8) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS customer (
@@ -105,3 +99,11 @@ CREATE TABLE IF NOT EXISTS customer (
     contact_id varchar(25) NOT NULL,
     reservation_id serial REFERENCES reservation
 );
+
+CREATE TABLE IF NOT EXISTS membership (
+    membership_id serial PRIMARY KEY,
+    discount numeric(5),
+    customer_id serial REFERENCES customer,
+    m_type varchar(8) NOT NULL
+);
+
