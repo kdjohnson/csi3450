@@ -20,6 +20,43 @@ CREATE TABLE IF NOT EXISTS aircraft (
     name varchar(25)
 );
 
+CREATE TABLE IF NOT EXISTS contact (
+    contact_id serial PRIMARY KEY,
+    ct_first_name varchar(25) NOT NULL,
+    ct_last_name varchar(25) NOT NULL,
+    ct_phone_number numeric(10) NOT NULL,
+    ct_email varchar(25) NOT NULL,
+    ct_relationship varchar(15)
+);
+      
+CREATE TABLE IF NOT EXISTS job (
+    job_id serial PRIMARY KEY,
+    job_type varchar(25) NOT NULL,
+    salary numeric(6) NOT NULL
+);
+    
+CREATE TABLE IF NOT EXISTS reservation (
+    reservation_id serial PRIMARY KEY,
+    luggage_weight numeric(2) NOT NULL,
+    seat_number varchar(4) NOT NULL,
+    accommodations varchar(25),
+    aircraft_id serial references aircraft,
+    invoice_id serial references payment,
+    insurance boolean NOT NULL
+);
+    
+CREATE TABLE IF NOT EXISTS payment (
+    invoice_id serial PRIMARY KEY,
+    vendor_name varchar(25) NOT NULL,
+    vendor_id numeric(7) NOT NULL,
+    method varchar(7) NOT NULL
+);
+    
+CREATE TABLE IF NOT EXISTS cancellations (
+    reservation_id serial references reservation,
+    cancel_date date NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS airport (
     airport_id char(3) PRIMARY KEY,
     a_name varchar(25) NOT NULL,
@@ -50,7 +87,7 @@ CREATE TABLE IF NOT EXISTS employee (
 
 CREATE TABLE IF NOT EXISTS membership (
     membership_id serial PRIMARY KEY,
-    discount int(5),
+    discount numeric(5),
     customer_id serial REFERENCES customer,
     m_type varchar(8) NOT NULL
 );
@@ -60,7 +97,7 @@ CREATE TABLE IF NOT EXISTS customer (
     c_first_name varchar(25) NOT NULL,
     c_last_name varchar(25) NOT NULL,
     email varchar(25) NOT NULL,
-    passport bit(1),
+    passport boolean,
     street varchar(25) NOT NULL,
     c_city varchar(25) NOT NULL,
     c_state varchar(25) NOT NULL,
