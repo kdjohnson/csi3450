@@ -8,8 +8,7 @@ public class Constants {
         new String("SELECT * FROM aircraft").replaceAll("\\s+", " ");
 
     public static final String INSERT_FLIGHT =
-        new String("INSERT into flight VALUES (?, ?, ?, ?, ?, ?)");
-    .replaceAll("\\s+", " ");
+        new String("INSERT into flight VALUES (?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
 
     public static final String INSERT_AIRCRAFT =
         new String("INSERT into aircraft VALUES (?, ?, ?, ?)").replaceAll("\\s+", " ");
