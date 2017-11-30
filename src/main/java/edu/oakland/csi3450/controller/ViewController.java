@@ -11,4 +11,9 @@ public class ViewController {
     public String customer(Model model) {
         return "customer";
     }
+
+    @RequestMapping("/admin")
+    public String customer(Model model) {
+        return "admin"
+    }
 }
