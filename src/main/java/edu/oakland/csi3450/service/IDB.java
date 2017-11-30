@@ -6,4 +6,6 @@ import edu.oakland.csi3450.models.*;
 public interface IDB {
     List<Aircraft> getAircrafts();
     List<Flight> getFlights();
+    List<Airport> getAirports();
+    List<String> getAirportIDs();
 }

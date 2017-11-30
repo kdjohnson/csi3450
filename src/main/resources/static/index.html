@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="row center">
-                <a href="#" class="btn-large waves-effect waves-light
+                <a href="/customer" class="btn-large waves-effect waves-light
                 book-flight">Book Flight</a>
             </div>
         </div>
@@ -75,30 +75,42 @@
             $( document ).ready(function(){
                 $(".button-collapse").sideNav();
                 $('select').material_select();
-                $('input.autocomplete.depart').autocomplete({
-                  data: {
-                    "DTW": null,
-                    "LAX": null,
-                    "LAG": null
-                  },
-                  limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                  onAutocomplete: function(val) {
-                    // Callback function when value is autcompleted.
-                  },
-                  minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                var airports = new Object();
+                $.ajax({
+                    type: "POST",
+                    url: "/api/v1/airportIDs",
+                    dataType: "json",
+                    success: function(data) {
+                        for(i = 0; i < data.length; i++) {
+                            var tmp = data[i]
+                            airports[tmp] = null
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error(xhr);
+                        console.error("Error retrieving data with ajax call");
+                    }
                 });
-                $('input.autocomplete.arrive').autocomplete({
-                  data: {
-                    "DTW": null,
-                    "LAX": null,
-                    "LAG": null
-                  },
-                  limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                  onAutocomplete: function(val) {
-                    // Callback function when value is autcompleted.
-                  },
-                  minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+
+                $( document ).ajaxStop(function() {
+                    $('input.autocomplete.depart').autocomplete({
+                        data: airports,
+                        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                        onAutocomplete: function(val) {
+                            // Callback function when value is autcompleted.
+                        },
+                        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                    });
+                    $('input.autocomplete.arrive').autocomplete({
+                        data: airports,
+                        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                        onAutocomplete: function(val) {
+                            // Callback function when value is autcompleted.
+                        },
+                        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                    });
                 });
+
             });
         </script>
     </body>

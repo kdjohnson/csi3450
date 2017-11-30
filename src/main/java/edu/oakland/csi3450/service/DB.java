@@ -43,8 +43,6 @@ public class DB implements IDB {
             List<Flight> flights = new ArrayList<Flight>();
             flights.addAll(
                 jdbcTemplate.query(Constants.GET_FLIGHTS, new Object[] {}, flightMapper));
-            System.out.println(flights);
-            System.out.println("Poooop");
             return flights;
         } catch (Exception e) {
             throw e;
@@ -56,4 +54,30 @@ public class DB implements IDB {
             rs.getString("gate"), rs.getInt("routing"), rs.getString("arrival"),
             rs.getString("departing"), rs.getInt("availability"), rs.getString("s"));
     };
+
+    public List<Airport> getAirports() {
+        try {
+            List<Airport> airports = new ArrayList<Airport>();
+            airports.addAll(
+                jdbcTemplate.query(Constants.GET_AIRPORTS, new Object[] {}, airportMapper));
+            return airports;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    RowMapper<Airport> airportMapper = (rs, rowNum) -> {
+        return new Airport(rs.getString("airport_id"), rs.getString("a_name"),
+            rs.getString("a_city"), rs.getString("a_country"));
+    };
+
+    public List<String> getAirportIDs() {
+        try {
+            List<String> airportIDs =
+                jdbcTemplate.queryForList(Constants.GET_AIRPORT_IDS, String.class);
+            return airportIDs;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
