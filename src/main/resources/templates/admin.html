@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </head>
+
+    <body>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+        <nav class="admin-nav nav-extended">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Regal Airways</a>
+            </div>
+            <div class="nav-content">
+                <ul class="tabs tabs-transparent">
+                    <li class="tab"><a class="active" href="#view">View</a></li>
+                    <li class="tab"><a href="#add">Add</a></li>
+                    <li class="tab"><a href="#update">Update</a></li>
+                    <li class="tab"><a href="#delete">Delete</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1 class="header center slogan"></h1>
+            <div class="row center">
+                <h5 class="header col s12 light">Admin</h5>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div id="view" class="col s12">
+                <div class="input-field col s12">
+                    <select id="table-name-select" name="table">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option th:each="name : ${names}" th:value="${name}" th:text="${#strings.capitalize(name)}"></option>
+                    </select>
+                    <label>Tables</label>
+                </div>
+                <div class="input-field col s12">
+                    <select id="limit-count">
+                        <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <label>How many rows to return</label>
+                </div>
+                <a id="get-table" disabled class="btn-large waves-effect waves-light">search</a>
+                <a id="clear-table" disabled class="btn-large waves-effect waves-light">clear table</a>
+                <table id="data-table">
+                </table>
+            </div>
+        </div>
+
+        <div id="add" class="col s12">
+            <select id="table-name-select-add" name="table">
+                <option value="" disabled selected>Choose your option</option>
+                <option th:each="name : ${names}" th:value="${name}" th:text="${#strings.capitalize(name)}"></option>
+            </select>
+            <a id="insert-table" disabled class="btn-large waves-effect waves-light">insert</a>
+            <div id="form-area-add">
+            </div>
+        </div>
+
+        <div id="update" class="col s12">
+            <select id="table-name-select-update" name="table">
+                <option value="" disabled selected>Choose your option</option>
+                <option th:each="name : ${names}" th:value="${name}" th:text="${#strings.capitalize(name)}"></option>
+            </select>
+            <a id="update-table" disabled class="btn-large waves-effect waves-light">update</a>
+            <div id="form-area-update">
+            </div>
+        </div>
+
+        <div id="delete" class="col s12">
+            <select id="table-name-select-delete" name="table">
+                <option value="" disabled selected>Choose your option</option>
+                <option th:each="name : ${names}" th:value="${name}" th:text="${#strings.capitalize(name)}"></option>
+            </select>
+            <div id="form-area-delete">
+                <div class="input-field col s6">
+                    <input id="primary-key" type="text" class="validate">
+                    <label for="primary-key">Primay key</label>
+                </div>
+            </div>
+            <a id="delete-table" disabled class="btn-large waves-effect waves-light">delete</a>
+        </div>
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/admin.js"></script>
+    </body>
+</html>
+
