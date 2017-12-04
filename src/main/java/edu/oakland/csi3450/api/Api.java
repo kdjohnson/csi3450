@@ -246,11 +246,12 @@ public class Api {
         @RequestParam("terminal_number") String terminalNumber, @RequestParam("gate") String gate,
         @RequestParam("routing") String routing, @RequestParam("arrival") String arrival,
         @RequestParam("departing") String departing,
-        @RequestParam("availability") String availability, @RequestParam("s") String status) {
+        @RequestParam("availability") String availability, @RequestParam("status") String status,
+        @RequestParam("cost") String cost) {
         try {
             int i = db.insertFlight(flightNumber, Integer.parseInt(terminalNumber), gate,
                 Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
-                status);
+                status, Double.parseDouble(cost));
             return i;
         } catch (Exception e) {
             throw e;
@@ -400,11 +401,12 @@ public class Api {
         @RequestParam("terminal_number") String terminalNumber, @RequestParam("gate") String gate,
         @RequestParam("routing") String routing, @RequestParam("arrival") String arrival,
         @RequestParam("departing") String departing,
-        @RequestParam("availability") String availability, @RequestParam("s") String status) {
+        @RequestParam("availability") String availability, @RequestParam("status") String status,
+        @RequestParam("cost") String cost) {
         try {
             int i = db.updateFlight(flightNumber, Integer.parseInt(terminalNumber), gate,
                 Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
-                status);
+                status, Double.parseDouble(cost));
             return i;
         } catch (Exception e) {
             throw e;
