@@ -37,7 +37,7 @@ public interface IDB {
     int insertAirport(
         String airportID, String airportName, String airportCity, String airportCountry);
     int insertFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status);
+        String arrival, String departing, int availability, String status, Double cost);
     int insertAircraft(double capacity, String flightNumber, double routing_range, String name);
     int insertEmployee(String aircraftID, String airportID, String jobID, String firstName,
         String lastName, Date dateHired);
@@ -56,7 +56,7 @@ public interface IDB {
     int updateAirport(
         String airportID, String airportName, String airportCity, String airportCountry);
     int updateFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status);
+        String arrival, String departing, int availability, String status, Double cost);
     int updateAircraft(
         String aircraftID, double capacity, String flightNumber, double routing_range, String name);
     int updateEmployee(String employeeID, String aircraftID, String airportID, String jobID,

@@ -92,10 +92,10 @@ public class Constants {
                                                      .replaceAll("\\s", " ");
 
     public static final String INSERT_FLIGHT =
-        new String("INSERT into flight VALUES (?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
+        new String("INSERT into flight VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
 
     public static final String UPDATE_FLIGHT = new String(
-        "UPDATE flight SET flight_number serial = ?, terminal_number = ?, gate = ?, routing = ?, arrival = ?, departing = ?, availability = ?, s = ? WHERE flight_number = ?");
+        "UPDATE flight SET flight_number serial = ?, terminal_number = ?, gate = ?, routing = ?, arrival = ?, departing = ?, availability = ?, s = ?, cost = ? WHERE flight_number = ?");
 
     public static final String INSERT_AIRCRAFT =
         new String("INSERT into aircraft VALUES (?, ?, ?, ?)").replaceAll("\\s+", " ");

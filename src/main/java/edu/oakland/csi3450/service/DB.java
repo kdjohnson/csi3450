@@ -115,7 +115,8 @@ public class DB implements IDB {
     RowMapper<Flight> flightMapper = (rs, rowNum) -> {
         return new Flight(rs.getString("flight_number"), rs.getInt("terminal_number"),
             rs.getString("gate"), rs.getInt("routing"), rs.getString("arrival"),
-            rs.getString("departing"), rs.getInt("availability"), rs.getString("s"));
+            rs.getString("departing"), rs.getInt("availability"), rs.getString("s"),
+            rs.getDouble("cost"));
     };
 
     public List<Airport> getAirports() {
@@ -412,11 +413,11 @@ public class DB implements IDB {
     }
 
     public int insertFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status) {
+        String arrival, String departing, int availability, String status, Double cost) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_FLIGHT,
-                new Object[] {flightNumber, terminalNumber, gate, routing, arrival, departing,
-                    availability, status});
+                new Object[] {Integer.parseInt(flightNumber), terminalNumber, gate, routing,
+                    arrival, departing, availability, status, cost});
             return i;
         } catch (Exception e) {
             throw e;
@@ -539,11 +540,11 @@ public class DB implements IDB {
     }
 
     public int updateFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status) {
+        String arrival, String departing, int availability, String status, Double cost) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_FLIGHT,
                 new Object[] {flightNumber, terminalNumber, gate, routing, arrival, departing,
-                    availability, status, flightNumber});
+                    availability, status, cost, flightNumber});
             return i;
         } catch (Exception e) {
             throw e;
