@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS flight (
     arrival varchar(3) NOT NULL,
     departing  varchar(3) NOT NULL,
     availability smallint NOT NULL,
-    s status default 'on time' 
+    s status default 'on time',
+    cost numeric NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS aircraft (

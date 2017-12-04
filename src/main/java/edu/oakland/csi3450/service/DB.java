@@ -92,10 +92,20 @@ public class DB implements IDB {
 
     public List<Flight> getFlights(String limit) {
         try {
-            System.out.println("poop");
             List<Flight> flights = new ArrayList<Flight>();
             flights.addAll(jdbcTemplate.query(Constants.GET_FLIGHTS_W_LIMIT,
                 new Object[] {Integer.parseInt(limit)}, flightMapper));
+            return flights;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public List<Flight> getFlights(String arriving, String departing) {
+        try {
+            List<Flight> flights = new ArrayList<Flight>();
+            flights.addAll(jdbcTemplate.query(
+                Constants.GET_FLIGHTS_W_ARPT, new Object[] {arriving, departing}, flightMapper));
             return flights;
         } catch (Exception e) {
             throw e;

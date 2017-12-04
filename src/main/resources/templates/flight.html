@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </head>
+    <body>
+        <div th:each="flight : ${flights}">
+            <p th:text="${flight.flightNumber}"></p>
+            <p th:text="${flight.terminalNumber}"></p>
+            <p th:text="${flight.gate}"></p>
+            <p th:text="${flight.routing}"></p>
+            <p th:text="${flight.arrival}"></p>
+            <p th:text="${flight.departing}"></p>
+            <p th:text="${flight.availability}"></p>
+            <p th:text="${flight.status}"></p>
+        </div>
+    </body>
+</html>

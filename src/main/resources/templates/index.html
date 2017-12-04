@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <!--Import Google Icon Font-->
@@ -43,27 +43,29 @@
                 </p>
             </form>
             <div class="row">
-                <div class="col s6">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input type="text" id="depart-autocomplete"
-                            class="autocomplete depart">
-                            <label for="autocomplete-input">Depart</label>
+                <form action="/flight" th:action="@{/flight}" th:object="${flight}" method="post">
+                    <div class="col s6">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input th:field="*{departing}" type="text" id="depart-autocomplete"
+                                                                           class="autocomplete depart">
+                                <label for="autocomplete-input">Depart</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col s6">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input type="text" id="arrive-autocomplete"
-                            class="autocomplete arrive">
-                            <label for="autocomplete-input">Arrive</label>
+                    <div class="col s6">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input th:field="*{arrival}" type="text" id="arrive-autocomplete"
+                                                                         class="autocomplete arrive">
+                                <label for="autocomplete-input">Arrive</label>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="row center">
-                <a href="/customer" class="btn-large waves-effect waves-light
+                <a href="/flight" class="btn-large waves-effect waves-light
                 book-flight">Book Flight</a>
             </div>
         </div>
