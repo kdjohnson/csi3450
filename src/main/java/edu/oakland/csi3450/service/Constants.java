@@ -15,6 +15,10 @@ public class Constants {
     public static final String GET_FLIGHTS_W_LIMIT =
         new String("SELECT * FROM flight LIMIT ?").replaceAll("\\s+", " ");
 
+    public static final String GET_FLIGHTS_W_ARPT =
+        new String("SELECT * FROM flight WHERE arrival = ? AND departing = ?")
+            .replaceAll("\\s+", " ");
+
     public static final String GET_AIRCRAFTS =
         new String("SELECT * FROM aircraft").replaceAll("\\s+", " ");
 

@@ -12,6 +12,7 @@ public interface IDB {
     List<String> getTableNames();
     List<Flight> getFlights();
     List<Flight> getFlights(String limit);
+    List<Flight> getFlights(String arriving, String departing);
     List<Airport> getAirports();
     List<Airport> getAirports(String limit);
     List<String> getAirportIDs();
