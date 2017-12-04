@@ -1,6 +1,3 @@
-DROP TYPE IF EXISTS status CASCADE;
-CREATE TYPE status AS ENUM ('delayed', 'cancelled', 'on time');
-
 CREATE TABLE IF NOT EXISTS flight (
     flight_number serial PRIMARY KEY,
     terminal_number numeric NOT NULL,
