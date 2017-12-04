@@ -18,6 +18,11 @@ public class ViewController {
         return "customer";
     }
 
+    @RequestMapping("/payment")
+    public String payment(Model model){
+        return "payment";
+    }
+  
     @RequestMapping("/admin")
     public String admin(Model model) {
         List<String> names = db.getTableNames();
