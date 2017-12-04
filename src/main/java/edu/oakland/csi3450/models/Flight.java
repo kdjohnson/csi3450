@@ -11,11 +11,12 @@ public class Flight {
     private String departing;
     private int availability;
     private String status;
+    private Double cost;
 
     public Flight() {}
 
     public Flight(String flightNumber, int terminalNumber, String gate, int routing, String arrival,
-        String departing, int availability, String status) {
+        String departing, int availability, String status, Double cost) {
         this.flightNumber = flightNumber;
         this.terminalNumber = terminalNumber;
         this.gate = gate;
@@ -24,5 +25,6 @@ public class Flight {
         this.departing = departing;
         this.availability = availability;
         this.status = status;
+        this.cost = cost;
     }
 }
