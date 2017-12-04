@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS flight (
     arrival varchar(3) NOT NULL,
     departing  varchar(3) NOT NULL,
     availability smallint NOT NULL,
-    s status default 'on time' 
+    s status default 'on time',
+    cost numeric NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS aircraft (
@@ -39,7 +40,9 @@ CREATE TABLE IF NOT EXISTS payment (
     invoice_id serial PRIMARY KEY,
     vendor_name text NOT NULL,
     vendor_id numeric(7) NOT NULL,
-    method text NOT NULL
+    method text NOT NULL,
+    card_number numeric NOT NULL,
+    cost numeric NOT NULL
 );
     
 CREATE TABLE IF NOT EXISTS reservation (
@@ -71,7 +74,7 @@ CREATE TYPE wifi_enum AS ENUM ('paid' , 'free', 'no');
 CREATE TABLE IF NOT EXISTS services (
     service_id serial PRIMARY KEY,
     movie text,
-    wifi wifi_enum,
+    wifi wifi_enum default 'no',
     meal text
 );
 
@@ -94,7 +97,7 @@ CREATE TABLE IF NOT EXISTS customer (
     street text NOT NULL,
     c_city text NOT NULL,
     c_state text NOT NULL,
-    c_country text NOT NULL,
+    c_country serial REFERENCES contact,
     contact_id text NOT NULL,
     reservation_id serial REFERENCES reservation
 );
