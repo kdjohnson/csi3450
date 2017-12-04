@@ -115,7 +115,7 @@ public class DB implements IDB {
     RowMapper<Flight> flightMapper = (rs, rowNum) -> {
         return new Flight(rs.getString("flight_number"), rs.getInt("terminal_number"),
             rs.getString("gate"), rs.getInt("routing"), rs.getString("arrival"),
-            rs.getString("departing"), rs.getInt("availability"), rs.getString("s"),
+            rs.getString("departing"), rs.getInt("availability"), rs.getString("status"),
             rs.getDouble("cost"));
     };
 
