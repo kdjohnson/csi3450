@@ -18,7 +18,7 @@ public class Employee {
         String lastName, Date dateHired) {
         this.id = id;
         this.aircraftID = aircraftID;
-        this.airportIDs = airportID;
+        this.airportID = airportID;
         this.jobID = jobID;
         this.firstName = firstName;
         this.lastName = lastName;

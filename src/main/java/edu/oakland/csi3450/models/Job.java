@@ -9,6 +9,7 @@ public class Job {
     private Double salary;
 
     public Job() {}
+
     public Job(String id, String type, Double salary) {
         this.id = id;
         this.type = type;
