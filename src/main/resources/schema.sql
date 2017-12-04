@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS contact (
     contact_id serial PRIMARY KEY,
     ct_first_name text NOT NULL,
     ct_last_name text NOT NULL,
-    ct_phone_number numeric(10) NOT NULL,
+    ct_phone_number text NOT NULL,
     ct_email text NOT NULL,
     ct_relationship varchar(15)
 );
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS payment (
     vendor_name text NOT NULL,
     vendor_id numeric(7) NOT NULL,
     method text NOT NULL,
-    card_number numeric NOT NULL,
+    card_number text NOT NULL,
     cost numeric NOT NULL
 );
     
@@ -65,13 +65,10 @@ CREATE TABLE IF NOT EXISTS airport (
     a_country text NOT NULL
 );
 
-DROP TYPE IF EXISTS wifi_enum CASCADE;
-CREATE TYPE wifi_enum AS ENUM ('paid' , 'free', 'no');
-
 CREATE TABLE IF NOT EXISTS services (
     service_id serial PRIMARY KEY,
     movie text,
-    wifi wifi_enum default 'no',
+    wifi text,
     meal text
 );
 
@@ -94,7 +91,7 @@ CREATE TABLE IF NOT EXISTS customer (
     street text NOT NULL,
     c_city text NOT NULL,
     c_state text NOT NULL,
-    c_country serial REFERENCES contact,
+    c_country text NOT NULL,
     contact_id text NOT NULL,
     reservation_id serial REFERENCES reservation
 );
