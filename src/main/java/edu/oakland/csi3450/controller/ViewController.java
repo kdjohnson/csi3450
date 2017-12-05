@@ -11,10 +11,14 @@ import edu.oakland.csi3450.service.IDB;
 import java.util.List;
 
 import edu.oakland.csi3450.models.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class ViewController {
     @Autowired IDB db;
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -28,8 +32,18 @@ public class ViewController {
     }
 
     @RequestMapping("/payment")
-    public String payment(Model model) {
+    public String payment(Model model, @ModelAttribute("flight") Flight flight) {
+        model.addAttribute("flight", db.getFlight(flight.getFlightNumber()));
+        model.addAttribute("payment", new Payment());
         return "payment";
+    }
+
+    @RequestMapping("/reservation")
+    public String reservation(Model model, @ModelAttribute("payment") Payment payment) {
+        db.insertPayment(payment.getVendorName(), payment.getCsv(), payment.getMethod(),
+            payment.getCardNumber(), payment.getCost());
+
+        return "reservation";
     }
 
     @RequestMapping("/admin")

@@ -16,8 +16,8 @@ insert into airport values
 ('ACY', 'Atlantic City International Airport', 'Atlantic City', 'USA') ON CONFLICT (airport_id) DO NOTHING;
 
 insert into flight values
-(DEFAULT, 4, 'A20', 1, 'APW', 'CAK', 11, 'on time', 250),
-(DEFAULT, 3, 'B30', 2, 'AKL', 'AKC', 13, 'delayed', 300),
-(DEFAULT, 3, 'C40', 2, 'ASG', 'ABQ', 15, 'cancelled', 350),
-(DEFAULT, 4, 'D15', 1, 'AAU', 'ANC', 17, 'delayed', 400.50),
-(DEFAULT, 5, 'C17', 2, 'AMZ', 'ATW', 19, 'on time', 375) ON CONFLICT (flight_number) DO NOTHING;
+(1, 4, 'A20', 1, 'APW', 'CAK', 11, 'on time', 250),
+(2, 3, 'B30', 2, 'AKL', 'AKC', 13, 'delayed', 300),
+(3, 3, 'C40', 2, 'ASG', 'ABQ', 15, 'cancelled', 350),
+(4, 4, 'D15', 1, 'AAU', 'ANC', 17, 'delayed', 400.50),
+(5, 5, 'C17', 2, 'AMZ', 'ATW', 19, 'on time', 375) ON CONFLICT (flight_number) DO NOTHING;

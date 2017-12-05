@@ -6,15 +6,20 @@ import java.util.Date;
 public class Payment {
     private String id;
     private String vendorName;
-    private int vendorID;
+    private String csv;
     private String method;
+    private String cardNumber;
+    private Double cost;
 
     public Payment() {}
 
-    public Payment(String id, String vendorName, int vendorID, String method) {
+    public Payment(
+        String id, String vendorName, String csv, String method, String cardNumber, Double cost) {
         this.id = id;
         this.vendorName = vendorName;
-        this.vendorID = vendorID;
+        this.csv = csv;
         this.method = method;
+        this.cardNumber = cardNumber;
+        this.cost = cost;
     }
 }

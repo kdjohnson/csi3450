@@ -112,6 +112,16 @@ public class DB implements IDB {
         }
     }
 
+    public Flight getFlight(String key) {
+        try {
+            Flight flight = jdbcTemplate.queryForObject(
+                Constants.GET_FLIGHT_W_KEY, new Object[] {Integer.parseInt(key)}, flightMapper);
+            return flight;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     RowMapper<Flight> flightMapper = (rs, rowNum) -> {
         return new Flight(rs.getString("flight_number"), rs.getInt("terminal_number"),
             rs.getString("gate"), rs.getInt("routing"), rs.getString("arrival"),
@@ -261,7 +271,8 @@ public class DB implements IDB {
 
     RowMapper<Payment> paymentMapper = (rs, rowNum) -> {
         return new Payment(rs.getString("invoice_id"), rs.getString("vendor_name"),
-            rs.getInt("vendor_id"), rs.getString("method"));
+            rs.getString("csv"), rs.getString("method"), rs.getString("card_number"),
+            rs.getDouble("cost"));
     };
 
     public List<Reservation> getReservations() {
@@ -465,15 +476,28 @@ public class DB implements IDB {
         }
     }
 
-    public int insertPayment(String vendorName, int vendorID, String method) {
+    public int insertPayment(String invoiceID, String vendorName, String csv, String method,
+        String card_number, Double cost) {
         try {
-            int i = jdbcTemplate.update(
-                Constants.INSERT_PAYMENT, new Object[] {vendorName, vendorID, method});
+            int i = jdbcTemplate.update(Constants.INSERT_PAYMENT_KEY,
+                new Object[] {invoiceID, vendorName, csv, method, card_number, cost});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
+
+    public int insertPayment(
+        String vendorName, String csv, String method, String card_number, Double cost) {
+        try {
+            int i = jdbcTemplate.update(Constants.INSERT_PAYMENT,
+                new Object[] {vendorName, csv, method, card_number, cost});
+            return i;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     public int insertReservation(int luggageWeight, int seatNumber, String accommodations,
         String aircraftID, String invoiceID, Boolean insurance) {
         try {
