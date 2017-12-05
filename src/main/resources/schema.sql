@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS aircraft (
+    aircraft_id serial PRIMARY KEY,
+    capacity numeric(6),
+    routing_range numeric(7) NOT NULL,
+    name text NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS flight (
     flight_number serial PRIMARY KEY,
     aircraft_id serial REFERENCES aircraft,
@@ -11,13 +18,6 @@ CREATE TABLE IF NOT EXISTS flight (
     cost numeric NOT NULL,
     depart_time timestamp NOT NULL,
     arrival_time timestamp NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS aircraft (
-    aircraft_id serial PRIMARY KEY,
-    capacity numeric(6),
-    routing_range numeric(7) NOT NULL,
-    name text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS contact (
@@ -84,6 +84,12 @@ CREATE TABLE IF NOT EXISTS employee (
     date_hired date NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS membership (
+    membership_id serial PRIMARY KEY,
+    discount numeric(5),
+    m_type text NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS customer (
     customer_id serial PRIMARY KEY,
     c_first_name text NOT NULL,
@@ -99,9 +105,4 @@ CREATE TABLE IF NOT EXISTS customer (
     membership_id serial REFERENCES membership
 );
 
-CREATE TABLE IF NOT EXISTS membership (
-    membership_id serial PRIMARY KEY,
-    discount numeric(5),
-    m_type text NOT NULL
-);
 
