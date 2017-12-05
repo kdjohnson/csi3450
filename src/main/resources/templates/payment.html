@@ -75,13 +75,13 @@
                     <form>
                         <div class="input-field col s12">
                             <input placeholder="0" id="luggage" type="number" class="validate" min="0" max="50" pattern="^[0-9]{1,2}$"/>
-                            <label for="csv_numer">Baggage weight</label>
+                            <label for="luggage">Baggage weight</label>
                         </div>
                     </form>
                 </div>
                 <div class="row">
                     <form action="/reservation" th:action="@{/reservation}" th:object="${payment}" method="post">
-                        <div class="row">
+                        <input type="hidden" th:value="${aircraftID}" th:id="id" th:name="id" /> <div class="row">
                             <div class="input-field col s6">
                                 <input th:field="*{method}" placeholder="Debit/Credit" id="cardType" type="text" class="validate"/>
                                 <label for="card_type">Method</label>

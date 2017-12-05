@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS payment (
     
 CREATE TABLE IF NOT EXISTS reservation (
     reservation_id serial PRIMARY KEY,
-    luggage_weight numeric(2) NOT NULL,
     seat_number varchar(4) NOT NULL,
     accommodations text,
     aircraft_id serial references aircraft,

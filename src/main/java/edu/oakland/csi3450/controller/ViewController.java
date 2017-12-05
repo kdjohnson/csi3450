@@ -13,6 +13,9 @@ import java.util.List;
 import edu.oakland.csi3450.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Random;
+
+import org.apache.commons.text.RandomStringGenerator;
 
 @Controller
 public class ViewController {
@@ -34,6 +37,7 @@ public class ViewController {
     @RequestMapping("/payment")
     public String payment(Model model, @ModelAttribute("flight") Flight flight) {
         model.addAttribute("flight", db.getFlight(flight.getFlightNumber()));
+        model.addAttribute("aircraftID", db.getAircraft(flight.getFlightNumber()).getAircraftID());
         model.addAttribute("payment", new Payment());
         return "payment";
     }
@@ -43,6 +47,13 @@ public class ViewController {
         db.insertPayment(payment.getVendorName(), payment.getCsv(), payment.getMethod(),
             payment.getCardNumber(), payment.getCost());
 
+        Random rand = new Random();
+        int n = rand.nextInt(15) + 1;
+        Payment lastPayment = db.getLatestPayment();
+        model.addAttribute("aircraftID", payment.getId());
+        model.addAttribute("seat", Integer.toString(n));
+        model.addAttribute("reservation", new Reservation());
+        model.addAttribute("invoiceID", lastPayment.getId());
         return "reservation";
     }
 
@@ -55,10 +66,15 @@ public class ViewController {
 
     @RequestMapping("/flight")
     public String flight(Model model, @ModelAttribute("flight") Flight flight) {
-        System.out.println(flight.getArrival());
-        System.out.println(flight.getDeparting());
         List<Flight> flights = db.getFlights(flight.getArrival(), flight.getDeparting());
         model.addAttribute("flights", flights);
         return "flight";
+    }
+
+    @RequestMapping("/end")
+    public String end(@ModelAttribute("reservation") Reservation reservation) {
+        db.insertReservation(reservation.getSeatNumber(), reservation.getAccommodations(),
+            reservation.getAircraftID(), reservation.getInvoiceID(), reservation.getInsurance());
+        return "end";
     }
 }

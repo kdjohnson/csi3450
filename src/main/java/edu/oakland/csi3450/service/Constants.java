@@ -22,6 +22,9 @@ public class Constants {
     public static final String GET_FLIGHT_W_KEY =
         new String("SELECT * FROM flight WHERE flight_number = ?");
 
+    public static final String GET_AIRCRAFT =
+        new String("SELECT * FROM aircraft WHERE flight_number = ?").replaceAll("\\s+", " ");
+
     public static final String GET_AIRCRAFTS =
         new String("SELECT * FROM aircraft").replaceAll("\\s+", " ");
 
@@ -66,6 +69,10 @@ public class Constants {
 
     public static final String GET_PAYMENTS_W_LIMIT =
         new String("SELECT * FROM payment LIMIT ?").replaceAll("\\s+", " ");
+
+    public static final String GET_LATEST_PAYMENT =
+        new String("SELECT * FROM payment order by invoice_id desc limit 1")
+            .replaceAll("\\s+", " ");
 
     public static final String GET_JOBS = new String("SELECT * FROM jobs").replaceAll("\\s+", " ");
 
@@ -157,11 +164,12 @@ public class Constants {
         new String("UPDATE job SET job_id = ?, job_type = ?, salary = ? WHERE = salary = ?")
             .replaceAll("\\s+", " ");
 
-    public static final String INSERT_RESERVATION =
-        new String("INSERT into reservation VALUES (?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_RESERVATION = new String(
+        "INSERT into reservation (seat_number, accommodations, aircraft_id, invoice_id, insurance) VALUES (?, ?, ?, ?, ?)")
+                                                        .replaceAll("\\s+", " ");
 
     public static final String UPDATE_RESERVATION = new String(
-        "UPDATE reservation SET reservation_id = ?, luggage_weight = ?, seat_number = ?, accommodations = ?, aircraft_id = ?, invoice_id = ?, insurance = ?")
+        "UPDATE reservation SET reservation_id = ?, seat_number = ?, accommodations = ?, aircraft_id = ?, invoice_id = ?, insurance = ?")
                                                         .replaceAll("\\s+", " ");
 
     public static final String INSERT_PAYMENT_KEY =
