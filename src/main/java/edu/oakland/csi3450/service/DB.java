@@ -227,7 +227,7 @@ public class DB implements IDB {
     }
 
     RowMapper<Contact> contactMapper = (rs, rowNum) -> {
-        return new Contact(rs.getString("contact_id"), rs.getString("ct_first_name "),
+        return new Contact(rs.getString("contact_id"), rs.getString("ct_first_name"),
             rs.getString("ct_last_name"), rs.getString("ct_phone_number"), rs.getString("ct_email"),
             rs.getString("ct_relationship"));
     };
@@ -447,8 +447,8 @@ public class DB implements IDB {
         String departing, int availability, String status, Double cost) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_FLIGHT,
-                new Object[] {Integer.parseInt(flightNumber), terminalNumber, gate, routing,
-                    arrival, departing, availability, status, cost});
+                new Object[] {
+                    terminalNumber, gate, routing, arrival, departing, availability, status, cost});
             return i;
         } catch (Exception e) {
             throw e;
