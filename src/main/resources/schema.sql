@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS flight (
     flight_number serial PRIMARY KEY,
+    aircraft_id serial REFERENCES aircraft,
     terminal_number numeric NOT NULL,
     gate varchar(3) NOT NULL,
     routing integer,
@@ -7,13 +8,14 @@ CREATE TABLE IF NOT EXISTS flight (
     departing  varchar(3) NOT NULL,
     availability smallint NOT NULL,
     status text NOT NULL,
-    cost numeric NOT NULL
+    cost numeric NOT NULL,
+    depart_time timestamp NOT NULL,
+    arrival_time timestamp NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS aircraft (
     aircraft_id serial PRIMARY KEY,
     capacity numeric(6),
-    flight_number serial REFERENCES flight,
     routing_range numeric(7) NOT NULL,
     name text NOT NULL
 );
@@ -47,7 +49,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     luggage_weight numeric(2) NOT NULL,
     seat_number varchar(4) NOT NULL,
     accommodations text,
-    aircraft_id serial references aircraft,
+    flight_number serial references flight,
     invoice_id serial references payment,
     insurance boolean NOT NULL
 );
@@ -74,7 +76,7 @@ CREATE TABLE IF NOT EXISTS services (
 
 CREATE TABLE IF NOT EXISTS employee (
     employee_id serial PRIMARY KEY,
-    aircraft_id serial REFERENCES aircraft,
+    flight_id numeric(7),
     airport_id char(3) REFERENCES airport,
     job_id serial REFERENCES job,
     e_first_name text NOT NULL,
@@ -93,13 +95,13 @@ CREATE TABLE IF NOT EXISTS customer (
     c_state text NOT NULL,
     c_country text NOT NULL,
     contact_id text NOT NULL,
-    reservation_id serial REFERENCES reservation
+    reservation_id serial REFERENCES reservation,
+    membership_id serial REFERENCES membership
 );
 
 CREATE TABLE IF NOT EXISTS membership (
     membership_id serial PRIMARY KEY,
     discount numeric(5),
-    customer_id serial REFERENCES customer,
     m_type text NOT NULL
 );
 

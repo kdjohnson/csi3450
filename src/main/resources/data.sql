@@ -16,18 +16,18 @@ insert into airport values
 ('ACY', 'Atlantic City International Airport', 'Atlantic City', 'USA') ON CONFLICT (airport_id) DO NOTHING;
 
 insert into flight values
-(1, 4, 'A20', 1, 'APW', 'CAK', 11, 'on time', 250),
-(2, 3, 'B30', 2, 'AKL', 'AKC', 13, 'delayed', 300),
-(3, 3, 'C40', 2, 'ASG', 'ABQ', 15, 'cancelled', 350),
-(4, 4, 'D15', 1, 'AAU', 'ANC', 17, 'delayed', 400.50),
-(5, 5, 'C17', 2, 'AMZ', 'ATW', 19, 'on time', 375) ON CONFLICT (flight_number) DO NOTHING;
+(1, 1, 4, 'A20', 1, 'APW', 'CAK', 11, 'on time', 250, '12/5/2017 17:00', '12/6/2017 20:00'),
+(2, 2, 3, 'B30', 2, 'AKL', 'AKC', 13, 'delayed', 300, '12/6/2017 19:00', '12/7/2017 1:00'),
+(3, 3, 3, 'C40', 2, 'ASG', 'ABQ', 15, 'cancelled', 350, '12/8/2017 20:00', '12/8/2017 23:00'),
+(4, 4, 4, 'D15', 1, 'AAU', 'ANC', 17, 'delayed', 400.50, '12/25/2017 14:00', '12/26/2017 23:00'),
+(5, 5, 5, 'C17', 2, 'AMZ', 'ATW', 19, 'on time', 375, '12/30/2017 6:00', '12/31/2017 5:00') ON CONFLICT (flight_number) DO NOTHING;
 
 insert into aircraft values
-(1, 116000, 1, 7250, 'Boeing 757-200PF'),
-(2, 575155, 2, 11750, 'Airbus A380'),
-(3, 116000, 3, 7250, 'Boeing 757-200PF'),
-(4, 396890, 4, 14427, 'Being 747-400'),
-(5, 442000, 5, 14816, 'Boeing 747-8') ON CONFLICT (aircraft_id) DO NOTHING;
+(1, 116000, 7250, 'Boeing 757-200PF'),
+(2, 575155, 11750, 'Airbus A380'),
+(3, 116000, 7250, 'Boeing 757-200PF'),
+(4, 396890, 14427, 'Being 747-400'),
+(5, 442000, 14816, 'Boeing 747-8') ON CONFLICT (aircraft_id) DO NOTHING;
 
 insert into contact values
 (1, 'Gjergji', 'Heqimi', '248-555-2222', 'gheqimi@gmail.com', 'Brother'),
@@ -78,11 +78,11 @@ insert into employee values
 (5, 5, 'AAU', 5, 'Miley', 'Cyrus', '5/19/1997') ON CONFLICT (employee_id) DO NOTHING;
 
 insert into customer values
-(1, 'Tom', 'Brady', 'tbrady@gmail.com', '1', '12125 Football Dr.', 'Boston', 'Massachusetts', 'USA', 4, 1),
-(2, 'Matthew', 'Stafford', 'mstafford@gmal.com', '1', '99990 Football Rd.', 'Detroit', 'Michigan', 'USA', 3, 2),
-(3, 'Aaron', 'Rodgers', 'arodgers@gmail.com', '0', '12121 Football Dr.', 'Green Bay', 'Wisconsin', 'USA', 2, 3),
-(4, 'Russell', 'Wilson', 'rwilson@gmail.com', '0', '33331 Football Rd.', 'Seattle', 'Washington', 'USA', 1, 4),
-(5, 'Cam', 'Newton', 'cnewton@gmail.com', '1', '11110 Superman Dr.', 'Charlotte', 'North Carolina', 'USA', 5, 5) ON CONFLICT (customer_id) DO NOTHING;
+(1, 'Tom', 'Brady', 'tbrady@gmail.com', '1', '12125 Football Dr.', 'Boston', 'Massachusetts', 'USA', 4, 1, 1),
+(2, 'Matthew', 'Stafford', 'mstafford@gmal.com', '1', '99990 Football Rd.', 'Detroit', 'Michigan', 'USA', 3, 2, 2),
+(3, 'Aaron', 'Rodgers', 'arodgers@gmail.com', '0', '12121 Football Dr.', 'Green Bay', 'Wisconsin', 'USA', 2, 3, 3),
+(4, 'Russell', 'Wilson', 'rwilson@gmail.com', '0', '33331 Football Rd.', 'Seattle', 'Washington', 'USA', 1, 4, 4),
+(5, 'Cam', 'Newton', 'cnewton@gmail.com', '1', '11110 Superman Dr.', 'Charlotte', 'North Carolina', 'USA', 5, 5, 5) ON CONFLICT (customer_id) DO NOTHING;
 
 insert into membership values
 (1, 50, 1, 'Silver'),
