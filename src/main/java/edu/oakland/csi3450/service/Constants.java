@@ -19,6 +19,9 @@ public class Constants {
         new String("SELECT * FROM flight WHERE arrival = ? AND departing = ?")
             .replaceAll("\\s+", " ");
 
+    public static final String GET_FLIGHT_W_KEY =
+        new String("SELECT * FROM flight WHERE flight_number = ?");
+
     public static final String GET_AIRCRAFTS =
         new String("SELECT * FROM aircraft").replaceAll("\\s+", " ");
 
@@ -161,8 +164,12 @@ public class Constants {
         "UPDATE reservation SET reservation_id = ?, luggage_weight = ?, seat_number = ?, accommodations = ?, aircraft_id = ?, invoice_id = ?, insurance = ?")
                                                         .replaceAll("\\s+", " ");
 
-    public static final String INSERT_PAYMENT =
-        new String("INSERT into payment VALUES (?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_PAYMENT_KEY =
+        new String("INSERT into payment VALUES (?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
+
+    public static final String INSERT_PAYMENT = new String(
+        "INSERT into payment(vendor_name, csv, method, card_number, cost) VALUES (?, ?, ?, ?, ?)")
+                                                    .replaceAll("\\s+", " ");
 
     public static final String INSERT_CANCELLATION =
         new String("INSERT into cancellation VALUES (?, ?)").replaceAll("\\s+", " ");

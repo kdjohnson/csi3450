@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS job (
 CREATE TABLE IF NOT EXISTS payment (
     invoice_id serial PRIMARY KEY,
     vendor_name text NOT NULL,
-    vendor_id numeric(7) NOT NULL,
+    csv text NOT NULL,
     method text NOT NULL,
     card_number text NOT NULL,
     cost numeric NOT NULL

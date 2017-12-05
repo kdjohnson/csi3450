@@ -44,11 +44,11 @@ insert into job values
 (5, 'Aircraft Inspector', 100000) ON CONFLICT (job_id) DO NOTHING;
 
 insert into payment values
-(1, 'JP Morgan Chase', 6123456, 'Debit', '1111222233334444', 1000),
-(2, 'OU Credit Union', 6234567, 'Credit', '2222333344445555', 1250),
-(3, 'Bank of America', 6345678, 'Credit', '3333444455556666', 750),
-(4, 'MSU Credit Union', 6456789, 'Debit', '4444555566667777', 300),
-(5, 'JP Morgan Chase', 6123456, 'Debit', '5555666677778888', 400) ON CONFLICT (invoice_id) DO NOTHING;
+(1, 'JP Morgan Chase', 123, 'Debit', '1111222233334444', 1000),
+(2, 'OU Credit Union', 345, 'Credit', '2222333344445555', 1250),
+(3, 'Bank of America', 567, 'Credit', '3333444455556666', 750),
+(4, 'MSU Credit Union', 789, 'Debit', '4444555566667777', 300),
+(5, 'JP Morgan Chase', 001, 'Debit', '5555666677778888', 400) ON CONFLICT (invoice_id) DO NOTHING;
 
 insert into reservation values
 (1, 2, 'A1', 'Wheelchair', 1, 1, '1'),

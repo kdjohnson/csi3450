@@ -308,10 +308,12 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/payment"}, produces = "application/json")
-    int insertPayment(@RequestParam("vendor_name") String vendorName,
-        @RequestParam("vendor_id") String vendorID, @RequestParam("method") String method) {
+    int insertPayment(@RequestParam("invoice_id") String invoiceID,
+        @RequestParam("vendor_name") String vendorName, @RequestParam("csv") String csv,
+        @RequestParam("method") String method, @RequestParam("card_number") String card_number,
+        @RequestParam("cost") Double cost) {
         try {
-            int i = db.insertPayment(vendorName, Integer.parseInt(vendorID), method);
+            int i = db.insertPayment(invoiceID, vendorName, csv, method, card_number, cost);
             return i;
         } catch (Exception e) {
             throw e;
