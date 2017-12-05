@@ -443,8 +443,8 @@ public class DB implements IDB {
         }
     }
 
-    public int insertFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status, Double cost) {
+    public int insertFlight(int terminalNumber, String gate, int routing, String arrival,
+        String departing, int availability, String status, Double cost) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_FLIGHT,
                 new Object[] {Integer.parseInt(flightNumber), terminalNumber, gate, routing,
@@ -490,17 +490,6 @@ public class DB implements IDB {
     public int insertJob(String type, Double salary) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_JOB, new Object[] {type, salary});
-            return i;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public int insertPayment(String invoiceID, String vendorName, String csv, String method,
-        String card_number, Double cost) {
-        try {
-            int i = jdbcTemplate.update(Constants.INSERT_PAYMENT_KEY,
-                new Object[] {invoiceID, vendorName, csv, method, card_number, cost});
             return i;
         } catch (Exception e) {
             throw e;

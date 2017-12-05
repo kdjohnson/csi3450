@@ -101,64 +101,71 @@ public class Constants {
         "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")
                                                      .replaceAll("\\s", " ");
 
-    public static final String INSERT_FLIGHT =
-        new String("INSERT into flight VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_FLIGHT = new String(
+        "INSERT into flight (terminal_number, gate, routing, arrival, departing, availability, status, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+                                                   .replaceAll("\\s+", " ");
 
     public static final String UPDATE_FLIGHT = new String(
         "UPDATE flight SET flight_number serial = ?, terminal_number = ?, gate = ?, routing = ?, arrival = ?, departing = ?, availability = ?, status = ?, cost = ? WHERE flight_number = ?");
 
-    public static final String INSERT_AIRCRAFT =
-        new String("INSERT into aircraft VALUES (?, ?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_AIRCRAFT = new String(
+        "INSERT into aircraft (capacity, flight_number, routing_range, name) VALUES (?, ?, ?, ?)")
+                                                     .replaceAll("\\s+", " ");
 
     public static final String UPDATE_AIRCRAFT = new String(
         "UPDATE aircraft SET aircraft_id = ?, capacity = ?, flight_number = ?, routing_range = ?, name = ? WHERE aircraft_id = ?")
                                                      .replaceAll("\\s+", " ");
 
-    public static final String INSERT_AIRPORT =
-        new String("INSERT into airport VALUES (?, ?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_AIRPORT = new String(
+        "INSERT into airport (airport_id, a_name, a_city, a_country) VALUES (?, ?, ?, ?)")
+                                                    .replaceAll("\\s+", " ");
 
     public static final String UPDATE_AIRPORT = new String(
         "UPDATE airport SET airport_id = ?, a_name = ?, a_city = ?, a_country = ? WHERE airport_id = ?")
                                                     .replaceAll("\\s+", " ");
 
     public static final String INSERT_SERVICE =
-        new String("INSERT into services VALUES (?, ?, ?)").replaceAll("\\s+", " ");
+        new String("INSERT into services (movie, wifi, meal) VALUES (?, ?, ?)")
+            .replaceAll("\\s+", " ");
 
     public static final String UPDATE_SERVICE = new String(
         "UPDATE services SET service_id = ?, movie = ?, wifi = ?, meal = ? WHERE service_id = ?")
                                                     .replaceAll("\\s+", " ");
 
-    public static final String INSERT_EMPLOYEE =
-        new String("INSERT into employee VALUES (?, ?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_EMPLOYEE = new String(
+        "INSERT into employee (aircraft_id, airport_id, job_id, e_first_name, e_last_name, date_hired) VALUES (?, ?, ?, ?, ?, ?)")
+                                                     .replaceAll("\\s+", " ");
 
     public static final String UPDATE_EMPLOYEE = new String(
         "UPDATE employee SET employee_id = ?, aircraft_id = ?, airport_id = ?, job_id = ?, e_first_name = ?, e_last_name = ?, date_hired ? WHERE employee_id = ?")
                                                      .replaceAll("\\s+", " ");
 
     public static final String INSERT_MEMBERSHIP =
-        new String("INSERT into membership VALUES (?, ?, ?)").replaceAll("\\s+", " ");
+        new String("INSERT into membership (discount, customer_id, m_type) VALUES (?, ?, ?)")
+            .replaceAll("\\s+", " ");
 
     public static final String UPDATE_MEMBERSHIP = new String(
         "UPDATE membership SET membership_id = ?, discount = ?,  customer_id = ?, m_type = ?")
                                                        .replaceAll("\\s+", " ");
 
-    public static final String INSERT_CUSTOMER =
-        new String("INSERT into customer VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-            .replaceAll("\\s+", " ");
+    public static final String INSERT_CUSTOMER = new String(
+        "INSERT into customer (c_first_name, c_last_name, email, passport, street, c_city, c_state, c_country, contact_id, reservation_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                                                     .replaceAll("\\s+", " ");
 
     public static final String UPDATE_CUSTOMER = new String(
         "UPDATE customer SET customer_id = ?, c_first_name = ?, c_last_name = ?, email = ?, passport = ?, street = ?, c_city = ?, c_state = ?, c_country = ?, contact_id = ?, reservation_id = ? WHERE customer_id = ?")
                                                      .replaceAll("\\s+", " ");
 
-    public static final String INSERT_CONTACT =
-        new String("INSERT into contact VALUES (?, ?, ?, ?, ?)").replaceAll("\\s+", " ");
+    public static final String INSERT_CONTACT = new String(
+        "INSERT into contact (ct_first_name, ct_last_name, ct_phone_number, ct_email, ct_relationship)  VALUES (?, ?, ?, ?, ?)")
+                                                    .replaceAll("\\s+", " ");
 
     public static final String UPDATE_CONTACT = new String(
         "UPDATE contact SET contact_id = ?, ct_first_name = ?, ct_last_name = ?, ct_phone_number = ?, ct_email = ?, ct_relationship = ? WHERE contact_id = ?")
                                                     .replaceAll("\\s+", " ");
 
     public static final String INSERT_JOB =
-        new String("INSERT into job VALUES (?, ?)").replaceAll("\\s+", " ");
+        new String("INSERT into job (job_type, salary) VALUES (?, ?)").replaceAll("\\s+", " ");
 
     public static final String UPDATE_JOB =
         new String("UPDATE job SET job_id = ?, job_type = ?, salary = ? WHERE = salary = ?")
@@ -180,7 +187,8 @@ public class Constants {
                                                     .replaceAll("\\s+", " ");
 
     public static final String INSERT_CANCELLATION =
-        new String("INSERT into cancellation VALUES (?, ?)").replaceAll("\\s+", " ");
+        new String("INSERT into cancellations (reservation_id, cancel_date) VALUES (?, ?)")
+            .replaceAll("\\s+", " ");
 
     public static final String UPDATE_CANCELLATION =
         new String("UPDATE cancellation SET reservation_id = ?, cancel_date = ?")

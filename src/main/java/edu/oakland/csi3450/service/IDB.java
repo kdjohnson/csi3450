@@ -47,8 +47,6 @@ public interface IDB {
     int insertContact(
         String firstName, String lastName, String phoneNumber, String email, String relationship);
     int insertJob(String type, Double salary);
-    int insertPayment(String invoiceID, String vendorName, String csv, String method,
-        String card_number, Double cost);
     int insertPayment(
         String vendorName, String csv, String method, String card_number, Double cost);
     int insertReservation(int seatNumber, String accommodations, String aircraftID,
