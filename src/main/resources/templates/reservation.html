@@ -29,6 +29,24 @@
                 <h5 class="header col s12 light">View reservation</h5>
             </div>
         </div>
+        <div class="row">
+            <div class="col s12 valign-wrapper">
+                <h3 class="flow-text col s8 left-align">Seat Number:</h3>
+                <p th:field="${seatNumber}" th:text="${seat}" class="flow-text col s4 left-align"></p>
+            </div>
+        </div>
+        <form action="/end" th:action="@{/end}" th:object="${reservation}" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input th:field="*{accommodations}" placeholder="Accomodations" id="accommodations" type="text" class="validate"/>
+                    <label for="accommodations<">Accommodations</label>
+                </div>
+            </div>
+            <input type="hidden" th:value="1" th:id="insurance" th:name="insurance" />
+            <input type="hidden" th:value="${invoiceID}" th:id="invoiceID" th:name="invoiceID" />
+            <input type="hidden" th:value="${aircraftID}" th:id="aircraftID" th:name="aircraftID" />
+            <input type="submit" value="Reservation" class="btn-large waves-effect waves-light" />
+        </form>
 
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

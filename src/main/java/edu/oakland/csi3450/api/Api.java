@@ -321,15 +321,13 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/reservation"}, produces = "application/json")
-    int insertReservation(@RequestParam("luggage_weight") String luggageWeight,
-        @RequestParam("seat_number") String seatNumber,
+    int insertReservation(@RequestParam("seat_number") String seatNumber,
         @RequestParam("accommodations") String accommodations,
         @RequestParam("aircraft_id") String aircraftID,
         @RequestParam("invoice_id") String invoiceID, @RequestParam("insurance") String insurance) {
         try {
-            int i =
-                db.insertReservation(Integer.parseInt(luggageWeight), Integer.parseInt(seatNumber),
-                    accommodations, aircraftID, invoiceID, Boolean.parseBoolean(insurance));
+            int i = db.insertReservation(Integer.parseInt(seatNumber), accommodations, aircraftID,
+                invoiceID, Boolean.parseBoolean(insurance));
             return i;
         } catch (Exception e) {
             throw e;
@@ -483,15 +481,13 @@ public class Api {
 
     @RequestMapping(value = {"update/reservation"}, produces = "application/json")
     int updateReservation(@RequestParam("reservation_id") String reservationID,
-        @RequestParam("luggage_weight") String luggageWeight,
         @RequestParam("seat_number") String seatNumber,
         @RequestParam("accommodations") String accommodations,
         @RequestParam("aircraft_id") String aircraftID,
         @RequestParam("invoice_id") String invoiceID, @RequestParam("insurance") String insurance) {
         try {
-            int i = db.updateReservation(reservationID, Integer.parseInt(luggageWeight),
-                Integer.parseInt(seatNumber), accommodations, aircraftID, invoiceID,
-                Boolean.parseBoolean(insurance));
+            int i = db.updateReservation(reservationID, Integer.parseInt(seatNumber),
+                accommodations, aircraftID, invoiceID, Boolean.parseBoolean(insurance));
             return i;
         } catch (Exception e) {
             throw e;
