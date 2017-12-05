@@ -6,7 +6,7 @@
 2. [PostgreSQL](https://www.postgresql.org/download/)
 3. [PgAdmin](https://www.pgadmin.org/download/pgadmin-3-windows/) (Windows)
 
-## Setup PostgreSQL for MacOS/Linux (PREFERRED)
+## Setup PostgreSQL for MacOS/Linux
 
 1. Open terminal.
 2. Launch interative terminal
@@ -14,7 +14,7 @@
    * On Linux `sudo -u postgres -i`
    * On macOS `psql postgres`
 
-3. Create a databsae
+3. Create a database
 
    * `create database regal_airways;`
 
@@ -28,8 +28,6 @@
    * [Github](https://github.com/kdjohnson/csi3450)
 
 ## Setup PostgresSQL on Windows with PgAdmin
-
-* [Download](https://www.pgadmin.org/download/pgadmin-3-windows/)
 
 ## Run project
 
