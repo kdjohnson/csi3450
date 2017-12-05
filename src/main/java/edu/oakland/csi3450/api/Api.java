@@ -242,14 +242,13 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/flight"}, produces = "application/json")
-    int insertFlight(@RequestParam("flight_number") String flightNumber,
-        @RequestParam("terminal_number") String terminalNumber, @RequestParam("gate") String gate,
-        @RequestParam("routing") String routing, @RequestParam("arrival") String arrival,
-        @RequestParam("departing") String departing,
+    int insertFlight(@RequestParam("terminal_number") String terminalNumber,
+        @RequestParam("gate") String gate, @RequestParam("routing") String routing,
+        @RequestParam("arrival") String arrival, @RequestParam("departing") String departing,
         @RequestParam("availability") String availability, @RequestParam("status") String status,
         @RequestParam("cost") String cost) {
         try {
-            int i = db.insertFlight(flightNumber, Integer.parseInt(terminalNumber), gate,
+            int i = db.insertFlight(Integer.parseInt(terminalNumber), gate,
                 Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
                 status, Double.parseDouble(cost));
             return i;
@@ -308,12 +307,11 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/payment"}, produces = "application/json")
-    int insertPayment(@RequestParam("invoice_id") String invoiceID,
-        @RequestParam("vendor_name") String vendorName, @RequestParam("csv") String csv,
-        @RequestParam("method") String method, @RequestParam("card_number") String card_number,
-        @RequestParam("cost") Double cost) {
+    int insertPayment(@RequestParam("vendor_name") String vendorName,
+        @RequestParam("csv") String csv, @RequestParam("method") String method,
+        @RequestParam("card_number") String card_number, @RequestParam("cost") Double cost) {
         try {
-            int i = db.insertPayment(invoiceID, vendorName, csv, method, card_number, cost);
+            int i = db.insertPayment(vendorName, csv, method, card_number, cost);
             return i;
         } catch (Exception e) {
             throw e;

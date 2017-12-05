@@ -39,16 +39,14 @@ public interface IDB {
     List<Membership> getMemberships(String limit);
     int insertAirport(
         String airportID, String airportName, String airportCity, String airportCountry);
-    int insertFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status, Double cost);
+    int insertFlight(int terminalNumber, String gate, int routing, String arrival, String departing,
+        int availability, String status, Double cost);
     int insertAircraft(double capacity, String flightNumber, double routing_range, String name);
     int insertEmployee(String aircraftID, String airportID, String jobID, String firstName,
         String lastName, Date dateHired);
     int insertContact(
         String firstName, String lastName, String phoneNumber, String email, String relationship);
     int insertJob(String type, Double salary);
-    int insertPayment(String invoiceID, String vendorName, String csv, String method,
-        String card_number, Double cost);
     int insertPayment(
         String vendorName, String csv, String method, String card_number, Double cost);
     int insertReservation(int seatNumber, String accommodations, String aircraftID,

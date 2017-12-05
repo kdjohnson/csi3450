@@ -28,8 +28,17 @@ public class ViewController {
     }
 
     @RequestMapping("/customer")
-    public String customer(Model model) {
+    public String customer(Model model, @ModelAttribute("contact") Contact contact) {
+        System.out.println(contact.getFirstName());
+        db.insertContact(contact.getFirstName(), contact.getLastName(), contact.getPhoneNumber(),
+            contact.getEmail(), contact.getRelationship());
         return "customer";
+    }
+
+    @RequestMapping("/contact")
+    public String contact(Model model) {
+        model.addAttribute("contact", new Contact());
+        return "contact";
     }
 
     @RequestMapping("/payment")
