@@ -13,6 +13,7 @@ public interface IDB {
     List<Flight> getFlights();
     List<Flight> getFlights(String limit);
     List<Flight> getFlights(String arriving, String departing);
+    Flight getFlight(String key);
     List<Airport> getAirports();
     List<Airport> getAirports(String limit);
     List<String> getAirportIDs();
@@ -44,7 +45,10 @@ public interface IDB {
     int insertContact(
         String firstName, String lastName, Double phoneNumber, String email, String relationship);
     int insertJob(String type, Double salary);
-    int insertPayment(String vendorName, int vendorID, String method);
+    int insertPayment(String invoiceID, String vendorName, String csv, String method,
+        String card_number, Double cost);
+    int insertPayment(
+        String vendorName, String csv, String method, String card_number, Double cost);
     int insertReservation(int luggageWeight, int seatNumber, String accommodations,
         String aircraftID, String invoiceID, Boolean insurance);
     int insertCancellation(String reservationID, Date cancelDate);
