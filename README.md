@@ -29,6 +29,14 @@
 
 ## Setup PostgresSQL on Windows with PgAdmin
 
+1. Open pgAdmin4
+2. Click on the server drop down and enter your password.
+3. Right-click on the server and select Create database.
+4. Name it `regal_airways`.
+5. Open git-bash or terminal of choice.
+6. Travel to project root directory.
+7. Run `./gradlew.bat clean bootRun`.
+
 ## Run project
 
 * On macOS/Linux
