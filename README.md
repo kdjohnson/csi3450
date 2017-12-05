@@ -1,46 +1,45 @@
 # csi3450
 
 ## Requirements
-1. Java
+
+1. Java 8
 2. [PostgreSQL](https://www.postgresql.org/download/)
+3. [PgAdmin](https://www.pgadmin.org/download/pgadmin-3-windows/) (Windows)
 
-## Setup PostgreSQ
-* [Docs](https://www.postgresql.org/docs/)
-* Launch interative terminal
-    * On Linux `sudo -u postgres -i`
-    * On macOS `psql postgres`
-* Create a user
-    * `create user YOURUSERNAME with password 'YOURPASSWORD';`
-    * For pgAdmin using the following [doc](https://www.pgadmin.org/docs/pgadmin4/dev/pgadmin_user.html)
-* Create a databsae
-    * `create database YOURDATBASENAME owner YOURUSERNAME;`
+## Setup PostgreSQL for MacOS/Linux (PREFERRED)
 
-## Setup application.properties
-* Inside [application.properties](./src/main/resources/application.properties)
-* Add the following
-```
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://localhost:5432/DATABASE_NAME
-spring.datasource.username=USERNAME_YOU_CREATED
-spring.datasource.password=@password@
-```
+1. Open terminal.
+2. Launch interative terminal
 
+   * On Linux `sudo -u postgres -i`
+   * On macOS `psql postgres`
 
-## How to build
+3. Create a databsae
+
+   * `create database regal_airways;`
+
+4. Exit interactive terminal for postgres
+
+   * `Ctrl+d`
+
+5. Clone or download project.
+
+   * From moodle submission
+   * [Github](https://github.com/kdjohnson/csi3450)
+
+## Setup PostgresSQL on Windows with PgAdmin
+
+* [Download](https://www.pgadmin.org/download/pgadmin-3-windows/)
+
+## Run project
+
 * On macOS/Linux
-    * `./gradlew clean bootRun -Dpassword=PASSWORD_FOR_USER`
+  * `./gradlew clean bootRun`
+* On windows
+  * `./gradlew.bat clean bootRun`
 
-* On Windows
-    * `gradlew clean bootRun -Dpassword=PASSWORD_FOR_USER`
+## Tested on
 
-* Then go to [localhost](http://localhost) and you should see It works!
-
-## Alter Schema
-* The schema can be altered inside the [schema.sql](./src/main/resources/schema.sql)
-* Some useful docs:
-    * [Constraints](https://www.postgresql.org/docs/9.6/static/ddl-constraints.html#DDL-CONSTRAINTS-PRIMARY-KEYS)
-    * [Data types](https://www.postgresql.org/docs/9.6/static/datatype.html)
-    * [Data definition](https://www.postgresql.org/docs/9.6/static/ddl.html)
-
-## Queries
-* Queries will be placed inside [Constants.java](./src/main/edu/oakland/csi3450/service/Constants.java)
+* Macbook, macOS High Sierra
+* MSI Laptop, Windows 7
+* Asus Laptop, Windows 8
