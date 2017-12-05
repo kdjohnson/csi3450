@@ -29,7 +29,6 @@ public class ViewController {
 
     @RequestMapping("/customer")
     public String customer(Model model, @ModelAttribute("contact") Contact contact) {
-        System.out.println(contact.getFirstName());
         db.insertContact(contact.getFirstName(), contact.getLastName(), contact.getPhoneNumber(),
             contact.getEmail(), contact.getRelationship());
         return "customer";
@@ -57,7 +56,7 @@ public class ViewController {
         Random rand = new Random();
         int n = rand.nextInt(15) + 1;
         Payment lastPayment = db.getLatestPayment();
-        model.addAttribute("aircraftID", payment.getId());
+        model.addAttribute("flightNumber", payment.getId());
         model.addAttribute("seat", Integer.toString(n));
         model.addAttribute("reservation", new Reservation());
         model.addAttribute("invoiceID", lastPayment.getId());
@@ -67,7 +66,9 @@ public class ViewController {
     @RequestMapping("/admin")
     public String admin(Model model) {
         List<String> names = db.getTableNames();
+        List<Flight> flights = db.getFlights();
         model.addAttribute("names", names);
+        model.addAttribute("flights", flights);
         return "admin";
     }
 
@@ -81,7 +82,7 @@ public class ViewController {
     @RequestMapping("/end")
     public String end(@ModelAttribute("reservation") Reservation reservation) {
         db.insertReservation(reservation.getSeatNumber(), reservation.getAccommodations(),
-            reservation.getAircraftID(), reservation.getInvoiceID(), reservation.getInsurance());
+            reservation.getFlightNumber(), reservation.getInvoiceID(), reservation.getInsurance());
         return "end";
     }
 }

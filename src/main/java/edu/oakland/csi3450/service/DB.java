@@ -317,10 +317,21 @@ public class DB implements IDB {
         }
     }
 
+    public List<Reservation> getReservationsForFlight(String flightNumber) {
+        try {
+            List<Reservation> reservations = new ArrayList<Reservation>();
+            reservations.addAll(jdbcTemplate.query(Constants.GET_RESERVATIONS_W_FLIGHT_NUMBER,
+                new Object[] {Integer.parseInt(flightNumber)}, reservationMapper));
+            return reservations;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     RowMapper<Reservation> reservationMapper = (rs, rowNum) -> {
         return new Reservation(rs.getString("reservation_id"), rs.getInt("seat_number"),
-            rs.getString("accommodations"), rs.getString("aircraft_id"), rs.getString("invoice_id"),
-            rs.getBoolean("insurance"));
+            rs.getString("accommodations"), rs.getString("flight_number"),
+            rs.getString("invoice_id"), rs.getBoolean("insurance"));
     };
 
     public List<Cancellation> getCancellations() {
@@ -507,11 +518,11 @@ public class DB implements IDB {
         }
     }
 
-    public int insertReservation(int seatNumber, String accommodations, String aircraftID,
+    public int insertReservation(int seatNumber, String accommodations, String flightNumber,
         String invoiceID, Boolean insurance) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_RESERVATION,
-                new Object[] {seatNumber, accommodations, Integer.parseInt(aircraftID),
+                new Object[] {seatNumber, accommodations, Integer.parseInt(flightNumber),
                     Integer.parseInt(invoiceID), insurance});
             return i;
         } catch (Exception e) {
@@ -642,11 +653,11 @@ public class DB implements IDB {
 
     // TODO: ADD PRIMARY KEY
     public int updateReservation(String reservationID, int seatNumber, String accommodations,
-        String aircraftID, String invoiceID, Boolean insurance) {
+        String flightNumber, String invoiceID, Boolean insurance) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_RESERVATION,
                 new Object[] {reservationID, seatNumber, accommodations,
-                    Integer.parseInt(aircraftID), Integer.parseInt(invoiceID), insurance,
+                    Integer.parseInt(flightNumber), Integer.parseInt(invoiceID), insurance,
                     reservationID});
             return i;
         } catch (Exception e) {

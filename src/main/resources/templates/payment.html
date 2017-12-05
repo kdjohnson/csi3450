@@ -78,8 +78,7 @@
                 </div>
                 <div class="row">
                     <form action="/reservation" th:action="@{/reservation}" th:object="${payment}" method="post">
-                        <input type="hidden" th:value="${aircraftID}" th:id="id" th:name="id" /> <div class="row">
-                            <div class="input-field col s6">
+                        <input type="hidden" th:value="${flight.flightNumber}" th:id="id" th:name="id" /> <div class="row"> <div class="input-field col s6">
                                 <input th:field="*{method}" placeholder="Debit/Credit" id="cardType" type="text" class="validate"/>
                                 <label for="card_type">Method</label>
                             </div>

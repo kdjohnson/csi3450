@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     reservation_id serial PRIMARY KEY,
     seat_number int NOT NULL,
     accommodations text,
-    aircraft_id serial references aircraft,
+    flight_number serial references flight,
     invoice_id serial references payment,
     insurance boolean NOT NULL
 );
@@ -153,7 +153,7 @@ insert into payment (vendor_name, csv, method, card_number, cost) values
 ('MSU Credit Union', 789, 'Debit', '4444555566667777', 300),
 ('JP Morgan Chase', 001, 'Debit', '5555666677778888', 400);
 
-insert into reservation (seat_number, accommodations, aircraft_id, invoice_id, insurance) values
+insert into reservation (seat_number, accommodations, flight_number, invoice_id, insurance) values
 (2, 'Wheelchair', 1, 1, '1'),
 (3, 'Custom Meal', 2, 2, '1'),
 (4, '', 3, 3, '1'),

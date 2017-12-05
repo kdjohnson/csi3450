@@ -29,6 +29,7 @@ public interface IDB {
     Payment getLatestPayment();
     List<Reservation> getReservations();
     List<Reservation> getReservations(String limit);
+    List<Reservation> getReservationsForFlight(String flightNumber);
     List<Cancellation> getCancellations();
     List<Cancellation> getCancellations(String limit);
     List<PlaneService> getPlaneServices();

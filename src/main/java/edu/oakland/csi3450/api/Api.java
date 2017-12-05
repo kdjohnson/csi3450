@@ -54,6 +54,17 @@ public class Api {
         }
     }
 
+    @RequestMapping(value = {"getReservations"}, produces = "application/json")
+    public List<Reservation> getReservations(@RequestParam("flightNumber") String flightNumber) {
+        try {
+            List<Reservation> reservations = new ArrayList<Reservation>();
+            reservations = db.getReservationsForFlight(flightNumber);
+            return reservations;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     @RequestMapping(value = {"aircrafts", "aircraft"}, produces = "application/json")
     public List<Aircraft> aircrafts(@RequestParam("limit") String limit) {
         try {
