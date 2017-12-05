@@ -58,9 +58,9 @@ insert into reservation values
 (5, 6, 'F7', '', 5, 4, '0') ON CONFLICT (reservation_id) DO NOTHING;
 
 insert into cancellations values
-(1, '12/4/2017')
-(2, '10/7/2012')
-(3, '7/7/2007')
+(1, '12/4/2017'),
+(2, '10/7/2012'),
+(3, '7/7/2007'),
 (4, '10/10/2010');
 
 insert into services values
