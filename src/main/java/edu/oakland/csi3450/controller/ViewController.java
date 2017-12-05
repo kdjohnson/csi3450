@@ -15,8 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Random;
 
-import org.apache.commons.text.RandomStringGenerator;
-
 @Controller
 public class ViewController {
     @Autowired IDB db;
