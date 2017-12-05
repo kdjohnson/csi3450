@@ -74,10 +74,10 @@ public class Constants {
         new String("SELECT * FROM payment order by invoice_id desc limit 1")
             .replaceAll("\\s+", " ");
 
-    public static final String GET_JOBS = new String("SELECT * FROM jobs").replaceAll("\\s+", " ");
+    public static final String GET_JOBS = new String("SELECT * FROM job").replaceAll("\\s+", " ");
 
     public static final String GET_JOBS_W_LIMIT =
-        new String("SELECT * FROM jobs LIMIT ?").replaceAll("\\s+", " ");
+        new String("SELECT * FROM job LIMIT ?").replaceAll("\\s+", " ");
 
     public static final String GET_CONTACTS =
         new String("SELECT * FROM contact").replaceAll("\\s+", " ");
@@ -92,10 +92,10 @@ public class Constants {
         new String("SELECT * FROM reservation LIMIT ?").replaceAll("\\s+", " ");
 
     public static final String GET_CANCELLATIONS =
-        new String("SELECT * FROM cancellation").replaceAll("\\s+", " ");
+        new String("SELECT * FROM cancellations").replaceAll("\\s+", " ");
 
     public static final String GET_CANCELLATIONS_W_LIMIT =
-        new String("SELECT * FROM cancellation LIMIT ?").replaceAll("\\s+", " ");
+        new String("SELECT * FROM cancellations LIMIT ?").replaceAll("\\s+", " ");
 
     public static final String GET_TABLE_NAMES = new String(
         "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")
@@ -191,7 +191,7 @@ public class Constants {
             .replaceAll("\\s+", " ");
 
     public static final String UPDATE_CANCELLATION =
-        new String("UPDATE cancellation SET reservation_id = ?, cancel_date = ?")
+        new String("UPDATE cancellations SET reservation_id = ?, cancel_date = ?")
             .replaceAll("\\s+", " ");
 
     public static final String DELETE_AIRCRAFT =
@@ -228,6 +228,6 @@ public class Constants {
         new String("DELETE FROM payment WHERE payment_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_CANCELLATION =
-        new String("DELETE FROM cancellation FROM WHERE reservation_id = ? AND cancel_date = ?")
+        new String("DELETE FROM cancellations FROM WHERE reservation_id = ? AND cancel_date = ?")
             .replaceAll("\\s+", " ");
 }
