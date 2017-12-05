@@ -290,8 +290,7 @@ public class Api {
         @RequestParam("ct_phone_number") String phoneNumber, @RequestParam("ct_email") String email,
         @RequestParam("ct_relationship") String relationship) {
         try {
-            int i = db.insertContact(
-                firstName, lastName, Double.parseDouble(phoneNumber), email, relationship);
+            int i = db.insertContact(firstName, lastName, phoneNumber, email, relationship);
             return i;
         } catch (Exception e) {
             throw e;
@@ -451,8 +450,8 @@ public class Api {
         @RequestParam("ct_phone_number") String phoneNumber, @RequestParam("ct_email") String email,
         @RequestParam("ct_relationship") String relationship) {
         try {
-            int i = db.updateContact(contactID, firstName, lastName,
-                Double.parseDouble(phoneNumber), email, relationship);
+            int i =
+                db.updateContact(contactID, firstName, lastName, phoneNumber, email, relationship);
             return i;
         } catch (Exception e) {
             throw e;

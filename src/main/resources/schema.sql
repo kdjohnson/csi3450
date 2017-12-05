@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS contact (
     contact_id serial PRIMARY KEY,
     ct_first_name text NOT NULL,
     ct_last_name text NOT NULL,
-    ct_phone_number numeric(10) NOT NULL,
+    ct_phone_number text NOT NULL,
     ct_email text NOT NULL,
     ct_relationship varchar(15)
 );
@@ -65,13 +65,10 @@ CREATE TABLE IF NOT EXISTS airport (
     a_country text NOT NULL
 );
 
-DROP TYPE IF EXISTS wifi_enum CASCADE;
-CREATE TYPE wifi_enum AS ENUM ('paid' , 'free', 'no');
-
 CREATE TABLE IF NOT EXISTS services (
     service_id serial PRIMARY KEY,
     movie text,
-    wifi wifi_enum,
+    wifi text,
     meal text
 );
 

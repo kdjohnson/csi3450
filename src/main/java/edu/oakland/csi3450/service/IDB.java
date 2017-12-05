@@ -43,7 +43,7 @@ public interface IDB {
     int insertEmployee(String aircraftID, String airportID, String jobID, String firstName,
         String lastName, Date dateHired);
     int insertContact(
-        String firstName, String lastName, Double phoneNumber, String email, String relationship);
+        String firstName, String lastName, String phoneNumber, String email, String relationship);
     int insertJob(String type, Double salary);
     int insertPayment(String invoiceID, String vendorName, String csv, String method,
         String card_number, Double cost);
@@ -65,7 +65,7 @@ public interface IDB {
         String aircraftID, double capacity, String flightNumber, double routing_range, String name);
     int updateEmployee(String employeeID, String aircraftID, String airportID, String jobID,
         String firstName, String lastName, Date dateHired);
-    int updateContact(String contactID, String firstName, String lastName, Double phoneNumber,
+    int updateContact(String contactID, String firstName, String lastName, String phoneNumber,
         String email, String relationship);
     int updateJob(String jobID, String type, Double salary);
     int updatePayment(String invoiceID, String vendorName, int vendorID, String method);

@@ -218,7 +218,7 @@ public class DB implements IDB {
 
     RowMapper<Contact> contactMapper = (rs, rowNum) -> {
         return new Contact(rs.getString("contact_id"), rs.getString("ct_first_name "),
-            rs.getString("ct_last_name"), rs.getDouble("ct_phone_number"), rs.getString("ct_email"),
+            rs.getString("ct_last_name"), rs.getString("ct_phone_number"), rs.getString("ct_email"),
             rs.getString("ct_relationship"));
     };
 
@@ -458,7 +458,7 @@ public class DB implements IDB {
     }
 
     public int insertContact(
-        String firstName, String lastName, Double phoneNumber, String email, String relationship) {
+        String firstName, String lastName, String phoneNumber, String email, String relationship) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_CONTACT,
                 new Object[] {firstName, lastName, phoneNumber, email, relationship});
@@ -599,7 +599,7 @@ public class DB implements IDB {
     }
 
     public int updateContact(String contactID, String firstName, String lastName,
-        Double phoneNumber, String email, String relationship) {
+        String phoneNumber, String email, String relationship) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_CONTACT,
                 new Object[] {
