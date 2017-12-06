@@ -6,7 +6,6 @@
     <link href="css/main.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
 
-<<<<<<< HEAD
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
@@ -48,7 +47,7 @@
             <p class="col s1">Cost:</p>
         </div>
         <div class= "row col s12">
-        <div th:each="flight : ${flights}">
+        <div class = "row col s12" th:each="flight : ${flights}">
             <input  class="col s1 valign-wrapper" th:field="*{flightNumber}" th:value="${flight.flightNumber}" name="group1" type="radio" th:id="'flight-number-'+ ${flight.flightNumber}" />
             <label  class = "col s1 valign-wrapper" th:for="'flight-number-' + ${flight.flightNumber}" th:text="${flight.availability}"></label>
             
@@ -59,7 +58,7 @@
                 <p class = "col s1" th:text="${flight.arrival}"></p>
                 <p class = "col s1" th:text="${flight.arrivalTime}"></p>
                 <p class = "col s1" th:text="${flight.departing}"></p>
-                <p class = "col s1" th:text="${flight.departingTime}"></p>
+                <p class = "col s1" th:text="${flight.departTime}"></p>
                 <p class = "col s1" th:text="${flight.availability}"></p>
                 <p class = "col s1" th:text="${flight.status}"></p>
                 <p class = "col s1" th:text="${flight.cost}"></p>
@@ -81,43 +80,3 @@ $(document).ready(function() {
 });
 </script>
 </html>
-=======
-        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    </head>
-    <body>
-        <nav class="nav">
-            <div class="nav-wrapper">
-                <a href="/" class="brand-logo">Regal Airways</a>
-            </div>
-        </nav>
-        <form action="/payment" th:action="@{/payment}" th:object="${flight}" method="post">
-            <p class="flow-text">Flights by availability:</p>
-            <div th:each="flight : ${flights}">
-                <input th:field="*{flightNumber}" th:value="${flight.flightNumber}" name="group1" type="radio" th:id="'flight-number-'+ ${flight.flightNumber}" />
-                <label th:for="'flight-number-' + ${flight.flightNumber}" th:text="${flight.availability}"></label>
-                </p>
-                <!--
-                    <p th:text="${flight.flightNumber}"></p>
-                    <p th:text="${flight.terminalNumber}"></p>
-                    <p th:text="${flight.gate}"></p>
-                    <p th:text="${flight.routing}"></p>
-                    <p th:text="${flight.arrival}"></p>
-                    <p th:text="${flight.departing}"></p>
-                    <p th:text="${flight.availability}"></p>
-                    <p th:text="${flight.status}"></p>
-                    <p th:text="${flight.cost}"></p>
-                -->
-            </div>
-            <input type="submit" value="Book Flight" class="btn-large waves-effect waves-light" />
-        </form>
-    </body>
-    <script>
-    $(document).ready(function() {
-        $('input[type=radio][name=group1]').change(function() {
-            console.log($(this).text());
-            console.log(this.value);
-        });
-    });
-    </script>
-</html>
->>>>>>> upstream/master
