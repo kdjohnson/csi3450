@@ -105,18 +105,18 @@ public class Constants {
                                                      .replaceAll("\\s", " ");
 
     public static final String INSERT_FLIGHT = new String(
-        "INSERT into flight (terminal_number, gate, routing, arrival, departing, availability, status, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+        "INSERT into flight (aircraft_id, terminal_number, gate, routing, arrival, departing, availability, status, cost, depart_time, arrival_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
                                                    .replaceAll("\\s+", " ");
 
     public static final String UPDATE_FLIGHT = new String(
-        "UPDATE flight SET flight_number serial = ?, terminal_number = ?, gate = ?, routing = ?, arrival = ?, departing = ?, availability = ?, status = ?, cost = ? WHERE flight_number = ?");
+        "UPDATE flight SET flight_number = ?, aircraft_id = ?, terminal_number = ?, gate = ?, routing = ?, arrival = ?, departing = ?, availability = ?, status = ?, cost = ? depart_time = ?, arrival_time = ? WHERE flight_number = ?");
 
-    public static final String INSERT_AIRCRAFT = new String(
-        "INSERT into aircraft (capacity, flight_number, routing_range, name) VALUES (?, ?, ?, ?)")
-                                                     .replaceAll("\\s+", " ");
+    public static final String INSERT_AIRCRAFT =
+        new String("INSERT into aircraft (capacity, routing_range, name) VALUES (?, ?, ?)")
+            .replaceAll("\\s+", " ");
 
     public static final String UPDATE_AIRCRAFT = new String(
-        "UPDATE aircraft SET aircraft_id = ?, capacity = ?, flight_number = ?, routing_range = ?, name = ? WHERE aircraft_id = ?")
+        "UPDATE aircraft SET aircraft_id = ?, capacity = ?, routing_range = ?, name = ? WHERE aircraft_id = ?")
                                                      .replaceAll("\\s+", " ");
 
     public static final String INSERT_AIRPORT = new String(
@@ -136,20 +136,20 @@ public class Constants {
                                                     .replaceAll("\\s+", " ");
 
     public static final String INSERT_EMPLOYEE = new String(
-        "INSERT into employee (aircraft_id, airport_id, job_id, e_first_name, e_last_name, date_hired) VALUES (?, ?, ?, ?, ?, ?)")
+        "INSERT into employee (flight_id, airport_id, job_id, e_first_name, e_last_name, date_hired) VALUES (?, ?, ?, ?, ?, ?)")
                                                      .replaceAll("\\s+", " ");
 
     public static final String UPDATE_EMPLOYEE = new String(
-        "UPDATE employee SET employee_id = ?, aircraft_id = ?, airport_id = ?, job_id = ?, e_first_name = ?, e_last_name = ?, date_hired ? WHERE employee_id = ?")
+        "UPDATE employee SET employee_id = ?, flight_id = ?, airport_id = ?, job_id = ?, e_first_name = ?, e_last_name = ?, date_hired = ? WHERE employee_id = ?")
                                                      .replaceAll("\\s+", " ");
 
     public static final String INSERT_MEMBERSHIP =
-        new String("INSERT into membership (discount, customer_id, m_type) VALUES (?, ?, ?)")
+        new String("INSERT into membership (discount, m_type) VALUES (?, ?)")
             .replaceAll("\\s+", " ");
 
-    public static final String UPDATE_MEMBERSHIP = new String(
-        "UPDATE membership SET membership_id = ?, discount = ?,  customer_id = ?, m_type = ?")
-                                                       .replaceAll("\\s+", " ");
+    public static final String UPDATE_MEMBERSHIP =
+        new String("UPDATE membership SET membership_id = ?, discount = ?, m_type = ?")
+            .replaceAll("\\s+", " ");
 
     public static final String INSERT_CUSTOMER = new String(
         "INSERT into customer (c_first_name, c_last_name, email, passport, street, c_city, c_state, c_country, contact_id, reservation_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
@@ -231,6 +231,6 @@ public class Constants {
         new String("DELETE FROM payment WHERE payment_id = ?").replaceAll("\\s+", " ");
 
     public static final String DELETE_CANCELLATION =
-        new String("DELETE FROM cancellations FROM WHERE reservation_id = ? AND cancel_date = ?")
+        new String("DELETE FROM cancellations FROM WHERE reservation_id = ?")
             .replaceAll("\\s+", " ");
 }

@@ -1,6 +1,5 @@
 package edu.oakland.csi3450.models;
 import lombok.Data;
-import java.util.Date;
 
 @Data
 public class Customer {
@@ -15,12 +14,13 @@ public class Customer {
     private String country;
     private String contactID;
     private String reservationID;
+    private String membershipID;
 
     public Customer() {}
 
     public Customer(String id, String firstName, String lastName, String email, Boolean passport,
         String street, String city, String state, String country, String contactID,
-        String reservationID) {
+        String reservationID, String membershipID) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,5 +32,6 @@ public class Customer {
         this.country = country;
         this.contactID = contactID;
         this.reservationID = reservationID;
+        this.membershipID = membershipID;
     }
 }
