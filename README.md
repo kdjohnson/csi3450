@@ -1,4 +1,4 @@
-# csi3450
+# Database Project for CSI-3450
 
 ## Requirements
 
@@ -43,6 +43,13 @@
   * `./gradlew clean bootRun`
 * On windows
   * `./gradlew.bat clean bootRun`
+
+## **NOTE**
+
+* Once you have ran the project once do the following:
+  * open `src/main/resources/application.properties`
+  * Change `spring.datasource.initialize=true` to
+    `spring.datasource.initialize=false`
 
 ## Tested on
 
