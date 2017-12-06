@@ -5,19 +5,19 @@ import java.util.Date;
 @Data
 public class Employee {
     private String id;
-    private String aircraftID;
+    private String flightNumber;
     private String airportID;
     private String jobID;
     private String firstName;
     private String lastName;
-    private Date dateHired;
+    private String dateHired;
 
     public Employee() {}
 
-    public Employee(String id, String aircraftID, String airportID, String jobID, String firstName,
-        String lastName, Date dateHired) {
+    public Employee(String id, String flightNumber, String airportID, String jobID,
+        String firstName, String lastName, String dateHired) {
         this.id = id;
-        this.aircraftID = aircraftID;
+        this.flightNumber = flightNumber;
         this.airportID = airportID;
         this.jobID = jobID;
         this.firstName = firstName;

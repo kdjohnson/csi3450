@@ -1,7 +1,6 @@
 package edu.oakland.csi3450.service;
 
 import java.util.List;
-import java.util.Date;
 import edu.oakland.csi3450.models.*;
 
 public interface IDB {
@@ -40,11 +39,12 @@ public interface IDB {
     List<Membership> getMemberships(String limit);
     int insertAirport(
         String airportID, String airportName, String airportCity, String airportCountry);
-    int insertFlight(int terminalNumber, String gate, int routing, String arrival, String departing,
-        int availability, String status, Double cost);
-    int insertAircraft(double capacity, String flightNumber, double routing_range, String name);
-    int insertEmployee(String aircraftID, String airportID, String jobID, String firstName,
-        String lastName, Date dateHired);
+    int insertFlight(int aircraftID, int terminalNumber, String gate, int routing, String arrival,
+        String departing, int availability, String status, Double cost, String departTime,
+        String arrivalTime);
+    int insertAircraft(double capacity, double routing_range, String name);
+    int insertEmployee(String flightNumber, String airportID, String jobID, String firstName,
+        String lastName, String dateHired);
     int insertContact(
         String firstName, String lastName, String phoneNumber, String email, String relationship);
     int insertJob(String type, Double salary);
@@ -52,32 +52,32 @@ public interface IDB {
         String vendorName, String csv, String method, String card_number, Double cost);
     int insertReservation(int seatNumber, String accommodations, String aircraftID,
         String invoiceID, Boolean insurance);
-    int insertCancellation(String reservationID, Date cancelDate);
+    int insertCancellation(String reservationID, String cancelDate);
     int insertPlaneService(String movie, String wifi, String meal);
     int insertCustomer(String firstName, String lastName, String email, Boolean passport,
         String street, String city, String state, String country, String contactID,
         String reservationID);
-    int insertMembership(Double discount, String customerID, String type);
+    int insertMembership(Double discount, String type);
     int updateAirport(
         String airportID, String airportName, String airportCity, String airportCountry);
-    int updateFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status, Double cost);
-    int updateAircraft(
-        String aircraftID, double capacity, String flightNumber, double routing_range, String name);
-    int updateEmployee(String employeeID, String aircraftID, String airportID, String jobID,
-        String firstName, String lastName, Date dateHired);
+    int updateFlight(String flightNumber, int aircraftID, int terminalNumber, String gate,
+        int routing, String arrival, String departing, int availability, String status, Double cost,
+        String arrivalTime, String departTime);
+    int updateAircraft(String aircraftID, double capacity, double routing_range, String name);
+    int updateEmployee(String employeeID, String flightNumber, String airportID, String jobID,
+        String firstName, String lastName, String dateHired);
     int updateContact(String contactID, String firstName, String lastName, String phoneNumber,
         String email, String relationship);
     int updateJob(String jobID, String type, Double salary);
     int updatePayment(String invoiceID, String vendorName, int vendorID, String method);
     int updateReservation(String reservationID, int seatNumber, String accommodations,
         String aircraftID, String invoiceID, Boolean insurance);
-    int updateCancellation(String reservationID, Date cancelDate);
+    int updateCancellation(String reservationID, String cancelDate);
     int updatePlaneService(String serviceID, String movie, String wifi, String meal);
     int updateCustomer(String customerID, String firstName, String lastName, String email,
         Boolean passport, String street, String city, String state, String country,
         String contactID, String reservationID);
-    int updateMembership(String membershipID, Double discount, String customerID, String type);
+    int updateMembership(String membershipID, Double discount, String type);
     int deleteAirport(String key);
     int deleteFlight(String key);
     int deleteAircraft(String key);

@@ -43,7 +43,7 @@ public class ViewController {
     @RequestMapping("/payment")
     public String payment(Model model, @ModelAttribute("flight") Flight flight) {
         model.addAttribute("flight", db.getFlight(flight.getFlightNumber()));
-        model.addAttribute("aircraftID", db.getAircraft(flight.getFlightNumber()).getAircraftID());
+        model.addAttribute("aircraftID", db.getFlight(flight.getFlightNumber()).getAircraftID());
         model.addAttribute("payment", new Payment());
         return "payment";
     }

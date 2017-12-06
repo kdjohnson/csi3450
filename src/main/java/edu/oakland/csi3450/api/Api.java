@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -200,9 +199,9 @@ public class Api {
         try {
             List<Employee> employees = new ArrayList<Employee>();
             if (Objects.equals(limit, null)) {
-                db.getEmployees();
+                employees = db.getEmployees();
             } else {
-                db.getEmployees(limit);
+                employees = db.getEmployees(limit);
             }
             return employees;
         } catch (Exception e) {
@@ -254,14 +253,16 @@ public class Api {
 
     @RequestMapping(value = {"insert/flight"}, produces = "application/json")
     int insertFlight(@RequestParam("terminal_number") String terminalNumber,
-        @RequestParam("gate") String gate, @RequestParam("routing") String routing,
-        @RequestParam("arrival") String arrival, @RequestParam("departing") String departing,
+        @RequestParam("aircraft_id") String aircraftID, @RequestParam("gate") String gate,
+        @RequestParam("routing") String routing, @RequestParam("arrival") String arrival,
+        @RequestParam("departing") String departing,
         @RequestParam("availability") String availability, @RequestParam("status") String status,
-        @RequestParam("cost") String cost) {
+        @RequestParam("cost") String cost, @RequestParam("depart_time") String departTime,
+        @RequestParam("arrival_time") String arrivalTime) {
         try {
-            int i = db.insertFlight(Integer.parseInt(terminalNumber), gate,
-                Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
-                status, Double.parseDouble(cost));
+            int i = db.insertFlight(Integer.parseInt(aircraftID), Integer.parseInt(terminalNumber),
+                gate, Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
+                status, Double.parseDouble(cost), departTime, arrivalTime);
             return i;
         } catch (Exception e) {
             throw e;
@@ -270,11 +271,10 @@ public class Api {
 
     @RequestMapping(value = {"insert/aircraft"}, produces = "application/json")
     int insertAircraft(@RequestParam("capacity") String capacity,
-        @RequestParam("flight_number") String flightNumber,
         @RequestParam("routing_range") String routing_range, @RequestParam("name") String name) {
         try {
-            int i = db.insertAircraft(Double.parseDouble(capacity), flightNumber,
-                Double.parseDouble(routing_range), name);
+            int i = db.insertAircraft(
+                Double.parseDouble(capacity), Double.parseDouble(routing_range), name);
             return i;
         } catch (Exception e) {
             throw e;
@@ -282,12 +282,14 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/employee"}, produces = "application/json")
-    int insertEmployee(@RequestParam("airport_id") String aircraftID,
-        @RequestParam("aircraft_id") String airportID, @RequestParam("job_id") String jobID,
+    int insertEmployee(@RequestParam("airport_id") String airportID,
+        @RequestParam("flight_id") String flightNumber, @RequestParam("job_id") String jobID,
         @RequestParam("e_first_name") String firstName,
-        @RequestParam("e_last_name") String lastName, @RequestParam("date_hired") Date dateHired) {
+        @RequestParam("e_last_name") String lastName,
+        @RequestParam("date_hired") String dateHired) {
         try {
-            int i = db.insertEmployee(aircraftID, airportID, jobID, firstName, lastName, dateHired);
+            int i =
+                db.insertEmployee(flightNumber, airportID, jobID, firstName, lastName, dateHired);
             return i;
         } catch (Exception e) {
             throw e;
@@ -345,7 +347,7 @@ public class Api {
 
     @RequestMapping(value = {"insert/cancellations"}, produces = "application/json")
     int insertCancellation(@RequestParam("reservation_id") String reservationID,
-        @RequestParam("cancel_date") Date cancelDate) {
+        @RequestParam("cancel_date") String cancelDate) {
         try {
             int i = db.insertCancellation(reservationID, cancelDate);
             return i;
@@ -382,10 +384,10 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/membership"}, produces = "application/json")
-    int insertMembership(@RequestParam("discount") String discount,
-        @RequestParam("customer_id") String customerID, @RequestParam("m_type") String type) {
+    int insertMembership(
+        @RequestParam("discount") String discount, @RequestParam("m_type") String type) {
         try {
-            int i = db.insertMembership(Double.parseDouble(discount), customerID, type);
+            int i = db.insertMembership(Double.parseDouble(discount), type);
             return i;
         } catch (Exception e) {
             throw e;
@@ -406,15 +408,17 @@ public class Api {
 
     @RequestMapping(value = {"update/flight"}, produces = "application/json")
     int updateFlight(@RequestParam("flight_number") String flightNumber,
-        @RequestParam("terminal_number") String terminalNumber, @RequestParam("gate") String gate,
-        @RequestParam("routing") String routing, @RequestParam("arrival") String arrival,
-        @RequestParam("departing") String departing,
+        @RequestParam("") String aircraftID, @RequestParam("terminal_number") String terminalNumber,
+        @RequestParam("gate") String gate, @RequestParam("routing") String routing,
+        @RequestParam("arrival") String arrival, @RequestParam("departing") String departing,
         @RequestParam("availability") String availability, @RequestParam("status") String status,
-        @RequestParam("cost") String cost) {
+        @RequestParam("cost") String cost, @RequestParam("depart_time") String departTime,
+        @RequestParam("arrival_time") String arrivalTime) {
         try {
-            int i = db.updateFlight(flightNumber, Integer.parseInt(terminalNumber), gate,
-                Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
-                status, Double.parseDouble(cost));
+            int i = db.updateFlight(flightNumber, Integer.parseInt(aircraftID),
+                Integer.parseInt(terminalNumber), gate, Integer.parseInt(routing), arrival,
+                departing, Integer.parseInt(availability), status, Double.parseDouble(cost),
+                departTime, arrivalTime);
             return i;
         } catch (Exception e) {
             throw e;
@@ -424,11 +428,10 @@ public class Api {
     @RequestMapping(value = {"update/aircraft"}, produces = "application/json")
     int updateAircraft(@RequestParam("aircraft_id") String aircraftID,
         @RequestParam("capacity") String capacity,
-        @RequestParam("flight_number") String flightNumber,
         @RequestParam("routing_range") String routingRange, @RequestParam("name") String name) {
         try {
-            int i = db.updateAircraft(aircraftID, Double.parseDouble(capacity), flightNumber,
-                Double.parseDouble(routingRange), name);
+            int i = db.updateAircraft(
+                aircraftID, Double.parseDouble(capacity), Double.parseDouble(routingRange), name);
             return i;
         } catch (Exception e) {
             throw e;
@@ -437,13 +440,14 @@ public class Api {
 
     @RequestMapping(value = {"update/employee"}, produces = "application/json")
     int updateEmployee(@RequestParam("employee_id") String employeeID,
-        @RequestParam("airport_id") String aircraftID,
-        @RequestParam("aircraft_id") String airportID, @RequestParam("job_id") String jobID,
+        @RequestParam("flight_id") String flightNumber, @RequestParam("job_id") String jobID,
+        @RequestParam("airport_id") String airportID,
         @RequestParam("e_first_name") String firstName,
-        @RequestParam("e_last_name") String lastName, @RequestParam("date_hired") Date dateHired) {
+        @RequestParam("e_last_name") String lastName,
+        @RequestParam("date_hired") String dateHired) {
         try {
             int i = db.updateEmployee(
-                employeeID, aircraftID, airportID, jobID, firstName, lastName, dateHired);
+                employeeID, flightNumber, airportID, jobID, firstName, lastName, dateHired);
             return i;
         } catch (Exception e) {
             throw e;
@@ -505,7 +509,7 @@ public class Api {
 
     @RequestMapping(value = {"update/cancellations"}, produces = "application/json")
     int updateCancellation(@RequestParam("reservation_id") String reservationID,
-        @RequestParam("cancel_date") Date cancelDate) {
+        @RequestParam("cancel_date") String cancelDate) {
         try {
             int i = db.updateCancellation(reservationID, cancelDate);
             return i;
@@ -546,11 +550,9 @@ public class Api {
 
     @RequestMapping(value = {"update/membership"}, produces = "application/json")
     int updateMembership(@RequestParam("membership_id") String membershipID,
-        @RequestParam("discount") String discount, @RequestParam("customer_id") String customerID,
-        @RequestParam("m_type") String type) {
+        @RequestParam("discount") String discount, @RequestParam("m_type") String type) {
         try {
-            int i =
-                db.updateMembership(membershipID, Double.parseDouble(discount), customerID, type);
+            int i = db.updateMembership(membershipID, Double.parseDouble(discount), type);
             return i;
         } catch (Exception e) {
             throw e;
