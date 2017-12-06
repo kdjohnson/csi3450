@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </head>
+
+    <body>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+        <nav class="nav">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Regal Airways</a>
+                <ul class="right hide-on-med-and-down">
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1 class="header center slogan">Contact Registration</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">In case of an emergency</h5>
+            </div>
+        </div>
+
+        <div>
+            <div class="row">
+                <form class="col s12" action="/customer" th:action="@{/customer}" th:object="${contact}" method="post">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input th:field="*{firstName}" th:id="firstName" th:name="firstName" placeholder="Enter first name."type="text" class="validate"/>
+                            <label for="firstName">First Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input th:field="*{lastName}" th:id="lastName" th:name="lastName" placeholder="Enter last name." id="last_name" type="text"  class="validate"/>
+                                <label for="lastName">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input th:field="*{email}" th:id="email" th:name="email" placeholder="Enter email"type="email" class="validate"/>
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input th:field="*{phoneNumber}" th:id="phoneNumber" th:name="phoneNumber" placeholder="Enter Phone number" type="text" class="validate"/>
+                            <label for="phoneNumber">Phone Number</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input th:field="*{relationship}" th:id="relationship" th:name="relationship" placeholder="Enter Relationship" type="text" class="validate"/>
+                            <label for="relationship">Relationship</label>
+                        </div>
+                    </div>
+                    <input type="submit" value="Confirm" class="btn-large waves-effect waves-light" />
+                </form>
+            </div>
+        </div>
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>
+

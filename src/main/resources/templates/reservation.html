@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </head>
+
+    <body>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+        <nav class="nav">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Regal Airways</a>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1 class="header center slogan">Reservation</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">View reservation</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 valign-wrapper">
+                <h3 class="flow-text col s8 left-align">Seat Number:</h3>
+                <p th:field="${seatNumber}" th:text="${seat}" class="flow-text col s4 left-align"></p>
+            </div>
+        </div>
+        <form action="/end" th:action="@{/end}" th:object="${reservation}" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input th:field="*{accommodations}" placeholder="Accomodations" id="accommodations" type="text" class="validate"/>
+                    <label for="accommodations<">Accommodations</label>
+                </div>
+            </div>
+            <input type="hidden" th:value="1" th:id="insurance" th:name="insurance" />
+            <input type="hidden" th:value="${invoiceID}" th:id="invoiceID" th:name="invoiceID" />
+            <input type="hidden" th:value="${flightNumber}" th:id="flightNumber" th:name="flightNumber" />
+            <input type="submit" value="Reservation" class="btn-large waves-effect waves-light" />
+        </form>
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>
+

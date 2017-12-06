@@ -54,6 +54,17 @@ public class Api {
         }
     }
 
+    @RequestMapping(value = {"getReservations"}, produces = "application/json")
+    public List<Reservation> getReservations(@RequestParam("flightNumber") String flightNumber) {
+        try {
+            List<Reservation> reservations = new ArrayList<Reservation>();
+            reservations = db.getReservationsForFlight(flightNumber);
+            return reservations;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     @RequestMapping(value = {"aircrafts", "aircraft"}, produces = "application/json")
     public List<Aircraft> aircrafts(@RequestParam("limit") String limit) {
         try {
@@ -242,14 +253,13 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/flight"}, produces = "application/json")
-    int insertFlight(@RequestParam("flight_number") String flightNumber,
-        @RequestParam("terminal_number") String terminalNumber, @RequestParam("gate") String gate,
-        @RequestParam("routing") String routing, @RequestParam("arrival") String arrival,
-        @RequestParam("departing") String departing,
+    int insertFlight(@RequestParam("terminal_number") String terminalNumber,
+        @RequestParam("gate") String gate, @RequestParam("routing") String routing,
+        @RequestParam("arrival") String arrival, @RequestParam("departing") String departing,
         @RequestParam("availability") String availability, @RequestParam("status") String status,
         @RequestParam("cost") String cost) {
         try {
-            int i = db.insertFlight(flightNumber, Integer.parseInt(terminalNumber), gate,
+            int i = db.insertFlight(Integer.parseInt(terminalNumber), gate,
                 Integer.parseInt(routing), arrival, departing, Integer.parseInt(availability),
                 status, Double.parseDouble(cost));
             return i;
@@ -309,9 +319,10 @@ public class Api {
 
     @RequestMapping(value = {"insert/payment"}, produces = "application/json")
     int insertPayment(@RequestParam("vendor_name") String vendorName,
-        @RequestParam("vendor_id") String vendorID, @RequestParam("method") String method) {
+        @RequestParam("csv") String csv, @RequestParam("method") String method,
+        @RequestParam("card_number") String card_number, @RequestParam("cost") Double cost) {
         try {
-            int i = db.insertPayment(vendorName, Integer.parseInt(vendorID), method);
+            int i = db.insertPayment(vendorName, csv, method, card_number, cost);
             return i;
         } catch (Exception e) {
             throw e;
@@ -319,15 +330,13 @@ public class Api {
     }
 
     @RequestMapping(value = {"insert/reservation"}, produces = "application/json")
-    int insertReservation(@RequestParam("luggage_weight") String luggageWeight,
-        @RequestParam("seat_number") String seatNumber,
+    int insertReservation(@RequestParam("seat_number") String seatNumber,
         @RequestParam("accommodations") String accommodations,
         @RequestParam("aircraft_id") String aircraftID,
         @RequestParam("invoice_id") String invoiceID, @RequestParam("insurance") String insurance) {
         try {
-            int i =
-                db.insertReservation(Integer.parseInt(luggageWeight), Integer.parseInt(seatNumber),
-                    accommodations, aircraftID, invoiceID, Boolean.parseBoolean(insurance));
+            int i = db.insertReservation(Integer.parseInt(seatNumber), accommodations, aircraftID,
+                invoiceID, Boolean.parseBoolean(insurance));
             return i;
         } catch (Exception e) {
             throw e;
@@ -481,15 +490,13 @@ public class Api {
 
     @RequestMapping(value = {"update/reservation"}, produces = "application/json")
     int updateReservation(@RequestParam("reservation_id") String reservationID,
-        @RequestParam("luggage_weight") String luggageWeight,
         @RequestParam("seat_number") String seatNumber,
         @RequestParam("accommodations") String accommodations,
         @RequestParam("aircraft_id") String aircraftID,
         @RequestParam("invoice_id") String invoiceID, @RequestParam("insurance") String insurance) {
         try {
-            int i = db.updateReservation(reservationID, Integer.parseInt(luggageWeight),
-                Integer.parseInt(seatNumber), accommodations, aircraftID, invoiceID,
-                Boolean.parseBoolean(insurance));
+            int i = db.updateReservation(reservationID, Integer.parseInt(seatNumber),
+                accommodations, aircraftID, invoiceID, Boolean.parseBoolean(insurance));
             return i;
         } catch (Exception e) {
             throw e;

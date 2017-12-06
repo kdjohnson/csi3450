@@ -60,7 +60,7 @@ $(document).ready(function() {
             data: {table: this.value},
             success: function(data) {
                 $('#insert-table').removeAttr('disabled');
-                for (var i = 0; i < data['names'].length; i++) {
+                for (var i = 1; i < data['names'].length; i++) {
                     $('#form-area-add')
                         .append(
                             '<div class="row">' +

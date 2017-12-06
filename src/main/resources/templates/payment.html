@@ -17,10 +17,7 @@
 
         <nav class="nav">
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">Regal Airways</a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#">FAQ</a></li>
-                </ul>
+                <a href="/" class="brand-logo">Regal Airways</a>
             </div>
         </nav>
 
@@ -34,84 +31,79 @@
         <div>
             <div class="row">
                 <div class="row">
-                    <div class="col s3 valign-wrapper">
+                    <div class="col s4 valign-wrapper">
                         <h3 class="flow-text col s8 left-align">Flight Number:</h3>
-                        <p class=" flow-text col s4 left-align">000000</p>
+                        <p th:text="${flight.flightNumber}" class=" flow-text col s4 left-align"></p>
                     </div>
-                    <div class="col s3 valign-wrapper">
+                    <div class="col s4 valign-wrapper">
                         <h3 class="flow-text col s8 left-align">Terminal:</h3>
-                        <p class="flow-text col s4 left-align">00</p>
+                        <p th:text="${flight.terminalNumber}" class="flow-text col s4 left-align"></p>
                     </div>
-                    <div class="col s3 valign-wrapper">
+                    <div class="col s4 valign-wrapper">
                         <h3 class="flow-text col s8 left-align">Gate:</h3>
-                        <p class="flow-text col s4 left-align">000</p>
+                        <p th:text="${flight.gate}" class="flow-text col s4 left-align"></p>
                     </div>
-                    <div class="col s3 valign-wrapper">
+                </div>
+                <div class="row">
+                    <div class="col s4 valign-wrapper">
                         <h3 class="flow-text col s8 left-align">Routing:</h3>
-                        <p class="flow-text col s4 left-align">0</p>
+                        <p th:text="${flight.routing}" class="flow-text col s4 left-align"></p>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col s3 valign-wrapper">
+                    <div class="col s4 valign-wrapper">
                         <h3 class="flow-text col s8 lleft-align">Departing:</h3>
-                        <p class="flow-text col s4 left-align">000</p>
+                        <p th:text="${flight.departing}" class="flow-text col s4 left-align"></p>
                     </div>
-                    <div class="col s3 valign-wrapper">
+                    <div class="col s4 valign-wrapper">
                         <h3 class="flow-text col s8 left-align">Arriving:</h3>
-                        <p class="flow-text col s4 left-align">000</p>
-                    </div>
-                    <div class="col s3 valign-wrapper">
-                        <h3 class="flow-text col s8 left-align">Status:</h3>
-                        <p class="flow-text col s4 left-align">000</p>
-                    </div>
-                    <div class="col s3 valign-wrapper">
-                        <h3 class="flow-text col s8 left-align">Flight Cost:</h3>
-                        <p class="flow-text col s4 left-align">$250.00</p>
+                        <p th:text="${flight.arrival}" class="flow-text col s4 left-align"></p>
                     </div>
                 </div>
                 <div class="row">
-                    <form action="#" class="trip-type">
-                        <p>
-                        <input name="group1" type="radio" id="extra-baggage" />
-                        <label for="extra-baggage">Baggage greater than 5kg</label>
-                        </p>
-                        <p>
-                        <input name="group1" type="radio" id="free-baggage" />
-                        <label for="free-baggage">Baggage less than 5kg</label>
-                        </p>
+                    <div class="col s4 valign-wrapper">
+                        <h3 class="flow-text col s8 left-align">Status:</h3>
+                        <p th:text="${flight.status}" class="flow-text col s4 left-align">000</p>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <h3 class="flow-text col s8 left-align">Flight Cost:</h3>
+                        <p th:text="${flight.cost}" class="flow-text col s4 left-align"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <form>
+                        <div class="input-field col s12">
+                            <input placeholder="0" id="luggage" type="number" class="validate" min="0" max="50" pattern="^[0-9]{1,2}$"/>
+                            <label for="luggage">Baggage weight</label>
+                        </div>
                     </form>
                 </div>
                 <div class="row">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input placeholder = "Debit/Credit" id="card_type" type="text" class= "validate"/>
-                                <label for="card_type">Card Type</label>
+                    <form action="/reservation" th:action="@{/reservation}" th:object="${payment}" method="post">
+                        <input type="hidden" th:value="${flight.flightNumber}" th:id="id" th:name="id" /> <div class="row"> <div class="input-field col s6">
+                                <input th:field="*{method}" placeholder="Debit/Credit" id="cardType" type="text" class="validate"/>
+                                <label for="card_type">Method</label>
                             </div>
                             <div class="input-field col s6">
-                                    <input placeholder = "Bank" id="vendor_name" type="text" class= "validate"/>
-                                    <label for="vendor_name">Bank/Credit Union</label>
+                                <input th:field="*{vendorName}" placeholder="Bank" id="vendorName" type="text" class="validate"/>
+                                <label for="vendorName">Bank/Credit Union</label>
                             </div>
                         </div>
                         <div class="row">
-                                <div class="input-field col s10">
-                                    <input placeholder = "Card Number" id="card_number" type="text" class= "validate"/>
-                                    <label for="card_number">Card Number</label>
-                                </div>
-                                <div class="input-field col s2">
-                                        <input placeholder = "CSV" id="csv_number" type="text" class= "validate"/>
-                                        <label for="csv_numer">CSV</label>
-                                </div>
+                            <div class="input-field col s10">
+                                <input th:field="*{cardNumber}" placeholder="Card Number" id="cardNumber" type="text" class="validate"/>
+                                <label for="cardNumber">Card Number</label>
                             </div>
+                            <div class="input-field col s2">
+                                <input th:field="*{csv}" placeholder="CSV" id="csv" type="text" class="validate"/>
+                                <label for="csv">CSV</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h2 id="price-text" class="col s6" th:text="'TOTAL PRICE $' + ${flight.cost}"></h2>
+                            <input type="hidden" th:value="${flight.cost}" th:id="cost" th:name="cost" />
+                        </div>
+                        <input type="submit" value="Make Reservation" class="btn-large waves-effect waves-light" />
                     </form>
                 </div>
-                <div class = "row">
-                    <h2 class = "col s6">TOTAL PRICE: $300.00</h2>
-                </div>
-            </div>
-            <div class="row center">
-                <a href="#" class="btn-large waves-effect waves-light
-                book-flight">Make Reservation</a>
             </div>
         </div>
 
@@ -119,7 +111,19 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript">
-           
+            $(document).ready(function(){
+                var orig = $('#cost').val();
+                $("#luggage").on("keyup keydown change",function(event){
+                    if(this.value >= 5) {
+                        var price = parseFloat(orig) + 100.00;
+                        $('#price-text').text('TOTAL PRICE $' + parseFloat(price));
+                        $('#cost').val(price);
+                    } else {
+                        $('#cost').val(parseFloat(orig));
+                        $('#price-text').text('TOTAL PRICE $' + parseFloat(orig));
+                    }
+                });
+            });
         </script>
     </body>
 </html>
