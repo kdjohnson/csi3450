@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS flight (
     availability smallint NOT NULL,
     status text NOT NULL,
     cost numeric NOT NULL,
-    depart_time timestamp NOT NULL,
-    arrival_time timestamp NOT NULL
+    depart_time text NOT NULL,
+    arrival_time text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS contact (
