@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     
 CREATE TABLE IF NOT EXISTS cancellations (
     reservation_id serial references reservation,
-    cancel_date date NOT NULL
+    cancel_date text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS airport (
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS employee (
     job_id serial REFERENCES job,
     e_first_name text NOT NULL,
     e_last_name text NOT NULL, 
-    date_hired date NOT NULL
+    date_hired text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS membership (
