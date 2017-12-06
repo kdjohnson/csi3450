@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.jdbc.core.RowMapper;
 import java.util.List;
-import java.util.Date;
 import java.util.ArrayList;
 
 @Service
@@ -74,9 +73,19 @@ public class DB implements IDB {
         }
     }
 
+    public Aircraft getAircraft(String key) {
+        try {
+            Aircraft aircraft = jdbcTemplate.queryForObject(
+                Constants.GET_AIRCRAFT, new Object[] {Integer.parseInt(key)}, aircraftMapper);
+            return aircraft;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     RowMapper<Aircraft> aircraftMapper = (rs, rowNum) -> {
         return new Aircraft(rs.getString("aircraft_id"), rs.getDouble("capacity"),
-            rs.getString("flight_number"), rs.getDouble("routing_range"), rs.getString("name"));
+            rs.getDouble("routing_range"), rs.getString("name"));
     };
 
     public List<Flight> getFlights() {
@@ -112,11 +121,22 @@ public class DB implements IDB {
         }
     }
 
+    public Flight getFlight(String key) {
+        try {
+            Flight flight = jdbcTemplate.queryForObject(
+                Constants.GET_FLIGHT_W_KEY, new Object[] {Integer.parseInt(key)}, flightMapper);
+            return flight;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     RowMapper<Flight> flightMapper = (rs, rowNum) -> {
-        return new Flight(rs.getString("flight_number"), rs.getInt("terminal_number"),
-            rs.getString("gate"), rs.getInt("routing"), rs.getString("arrival"),
-            rs.getString("departing"), rs.getInt("availability"), rs.getString("status"),
-            rs.getDouble("cost"));
+        return new Flight(rs.getString("flight_number"), rs.getString("aircraft_id"),
+            rs.getInt("terminal_number"), rs.getString("gate"), rs.getInt("routing"),
+            rs.getString("arrival"), rs.getString("departing"), rs.getInt("availability"),
+            rs.getString("status"), rs.getDouble("cost"), rs.getString("depart_time"),
+            rs.getString("arrival_time"));
     };
 
     public List<Airport> getAirports() {
@@ -179,9 +199,9 @@ public class DB implements IDB {
     }
 
     RowMapper<Employee> employeeMapper = (rs, rowNum) -> {
-        return new Employee(rs.getString("employee_id"), rs.getString("aircraft_id"),
+        return new Employee(rs.getString("employee_id"), rs.getString("flight_id"),
             rs.getString("airport_id"), rs.getString("job_id"), rs.getString("e_first_name"),
-            rs.getString("e_last_name"), rs.getDate("date_hired"));
+            rs.getString("e_last_name"), rs.getString("date_hired"));
     };
 
     public List<Contact> getContacts() {
@@ -207,8 +227,8 @@ public class DB implements IDB {
     }
 
     RowMapper<Contact> contactMapper = (rs, rowNum) -> {
-        return new Contact(rs.getString("contact_id"), rs.getString("ct_first_name "),
-            rs.getString("ct_last_name"), rs.getDouble("ct_phone_number"), rs.getString("ct_email"),
+        return new Contact(rs.getString("contact_id"), rs.getString("ct_first_name"),
+            rs.getString("ct_last_name"), rs.getString("ct_phone_number"), rs.getString("ct_email"),
             rs.getString("ct_relationship"));
     };
 
@@ -259,9 +279,20 @@ public class DB implements IDB {
         }
     }
 
+    public Payment getLatestPayment() {
+        try {
+            Payment payment = jdbcTemplate.queryForObject(
+                Constants.GET_LATEST_PAYMENT, new Object[] {}, paymentMapper);
+            return payment;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     RowMapper<Payment> paymentMapper = (rs, rowNum) -> {
         return new Payment(rs.getString("invoice_id"), rs.getString("vendor_name"),
-            rs.getInt("vendor_id"), rs.getString("method"));
+            rs.getString("csv"), rs.getString("method"), rs.getString("card_number"),
+            rs.getDouble("cost"));
     };
 
     public List<Reservation> getReservations() {
@@ -286,9 +317,20 @@ public class DB implements IDB {
         }
     }
 
+    public List<Reservation> getReservationsForFlight(String flightNumber) {
+        try {
+            List<Reservation> reservations = new ArrayList<Reservation>();
+            reservations.addAll(jdbcTemplate.query(Constants.GET_RESERVATIONS_W_FLIGHT_NUMBER,
+                new Object[] {Integer.parseInt(flightNumber)}, reservationMapper));
+            return reservations;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     RowMapper<Reservation> reservationMapper = (rs, rowNum) -> {
-        return new Reservation(rs.getString("reservation_id"), rs.getInt("luggage_weight"),
-            rs.getInt("seat_number"), rs.getString("accommodations"), rs.getString("aircraft_id"),
+        return new Reservation(rs.getString("reservation_id"), rs.getInt("seat_number"),
+            rs.getString("accommodations"), rs.getString("flight_number"),
             rs.getString("invoice_id"), rs.getBoolean("insurance"));
     };
 
@@ -315,7 +357,7 @@ public class DB implements IDB {
     }
 
     RowMapper<Cancellation> cancellationMapper = (rs, rowNum) -> {
-        return new Cancellation(rs.getString("reservation_id"), rs.getDate("cancel_date"));
+        return new Cancellation(rs.getString("reservation_id"), rs.getString("cancel_date"));
     };
 
     public List<PlaneService> getPlaneServices() {
@@ -371,7 +413,8 @@ public class DB implements IDB {
         return new Customer(rs.getString("customer_id"), rs.getString("c_first_name"),
             rs.getString("c_last_name"), rs.getString("email"), rs.getBoolean("passport"),
             rs.getString("street"), rs.getString("c_city"), rs.getString("c_state"),
-            rs.getString("c_country"), rs.getString("contact_id"), rs.getString("reservation_id"));
+            rs.getString("c_country"), rs.getString("contact_id"), rs.getString("reservation_id"),
+            rs.getString("membership_id"));
     };
 
     public List<Membership> getMemberships() {
@@ -397,8 +440,8 @@ public class DB implements IDB {
     }
 
     RowMapper<Membership> membershipMapper = (rs, rowNum) -> {
-        return new Membership(rs.getString("membership_id"), rs.getDouble("discount"),
-            rs.getString("customer_id"), rs.getString("m_type"));
+        return new Membership(
+            rs.getString("membership_id"), rs.getDouble("discount"), rs.getString("m_type"));
     };
 
     public int insertAirport(
@@ -412,34 +455,35 @@ public class DB implements IDB {
         }
     }
 
-    public int insertFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status, Double cost) {
+    public int insertFlight(int aircraftID, int terminalNumber, String gate, int routing,
+        String arrival, String departing, int availability, String status, Double cost,
+        String departTime, String arrivalTime) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_FLIGHT,
-                new Object[] {Integer.parseInt(flightNumber), terminalNumber, gate, routing,
-                    arrival, departing, availability, status, cost});
+                new Object[] {aircraftID, terminalNumber, gate, routing, arrival, departing,
+                    availability, status, cost, departTime, arrivalTime});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int insertAircraft(
-        double capacity, String flightNumber, double routing_range, String name) {
+    public int insertAircraft(double capacity, double routing_range, String name) {
         try {
-            int i = jdbcTemplate.update(Constants.INSERT_AIRCRAFT,
-                new Object[] {capacity, flightNumber, routing_range, name});
+            int i = jdbcTemplate.update(
+                Constants.INSERT_AIRCRAFT, new Object[] {capacity, routing_range, name});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int insertEmployee(String aircraftID, String airportID, String jobID, String firstName,
-        String lastName, Date dateHired) {
+    public int insertEmployee(String flightNumber, String airportID, String jobID, String firstName,
+        String lastName, String dateHired) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_EMPLOYEE,
-                new Object[] {aircraftID, airportID, jobID, firstName, lastName, dateHired});
+                new Object[] {Integer.parseInt(flightNumber), airportID, Integer.parseInt(jobID),
+                    firstName, lastName, dateHired});
             return i;
         } catch (Exception e) {
             throw e;
@@ -447,7 +491,7 @@ public class DB implements IDB {
     }
 
     public int insertContact(
-        String firstName, String lastName, Double phoneNumber, String email, String relationship) {
+        String firstName, String lastName, String phoneNumber, String email, String relationship) {
         try {
             int i = jdbcTemplate.update(Constants.INSERT_CONTACT,
                 new Object[] {firstName, lastName, phoneNumber, email, relationship});
@@ -465,28 +509,30 @@ public class DB implements IDB {
         }
     }
 
-    public int insertPayment(String vendorName, int vendorID, String method) {
+    public int insertPayment(
+        String vendorName, String csv, String method, String card_number, Double cost) {
         try {
-            int i = jdbcTemplate.update(
-                Constants.INSERT_PAYMENT, new Object[] {vendorName, vendorID, method});
-            return i;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-    public int insertReservation(int luggageWeight, int seatNumber, String accommodations,
-        String aircraftID, String invoiceID, Boolean insurance) {
-        try {
-            int i = jdbcTemplate.update(Constants.INSERT_RESERVATION,
-                new Object[] {
-                    luggageWeight, seatNumber, accommodations, aircraftID, invoiceID, insurance});
+            int i = jdbcTemplate.update(Constants.INSERT_PAYMENT,
+                new Object[] {vendorName, csv, method, card_number, cost});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int insertCancellation(String reservationID, Date cancelDate) {
+    public int insertReservation(int seatNumber, String accommodations, String flightNumber,
+        String invoiceID, Boolean insurance) {
+        try {
+            int i = jdbcTemplate.update(Constants.INSERT_RESERVATION,
+                new Object[] {seatNumber, accommodations, Integer.parseInt(flightNumber),
+                    Integer.parseInt(invoiceID), insurance});
+            return i;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public int insertCancellation(String reservationID, String cancelDate) {
         try {
             int i = jdbcTemplate.update(
                 Constants.INSERT_CANCELLATION, new Object[] {reservationID, cancelDate});
@@ -518,10 +564,9 @@ public class DB implements IDB {
         }
     }
 
-    public int insertMembership(Double discount, String customerID, String type) {
+    public int insertMembership(Double discount, String type) {
         try {
-            int i = jdbcTemplate.update(
-                Constants.INSERT_MEMBERSHIP, new Object[] {discount, customerID, type});
+            int i = jdbcTemplate.update(Constants.INSERT_MEMBERSHIP, new Object[] {discount, type});
             return i;
         } catch (Exception e) {
             throw e;
@@ -539,35 +584,38 @@ public class DB implements IDB {
         }
     }
 
-    public int updateFlight(String flightNumber, int terminalNumber, String gate, int routing,
-        String arrival, String departing, int availability, String status, Double cost) {
+    public int updateFlight(String flightNumber, int aircraftID, int terminalNumber, String gate,
+        int routing, String arrival, String departing, int availability, String status, Double cost,
+        String departTime, String arrivalTime) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_FLIGHT,
-                new Object[] {flightNumber, terminalNumber, gate, routing, arrival, departing,
-                    availability, status, cost, flightNumber});
+                new Object[] {flightNumber, aircraftID, terminalNumber, gate, routing, arrival,
+                    departing, availability, status, cost, departTime, arrivalTime, flightNumber});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int updateAircraft(String aircraftID, double capacity, String flightNumber,
-        double routing_range, String name) {
+    public int updateAircraft(
+        String aircraftID, double capacity, double routing_range, String name) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_AIRCRAFT,
-                new Object[] {aircraftID, capacity, flightNumber, routing_range, name, aircraftID});
+                new Object[] {Integer.parseInt(aircraftID), capacity, routing_range, name,
+                    Integer.parseInt(aircraftID)});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int updateEmployee(String employeeID, String aircraftID, String airportID, String jobID,
-        String firstName, String lastName, Date dateHired) {
+    public int updateEmployee(String employeeID, String flightNumber, String airportID,
+        String jobID, String firstName, String lastName, String dateHired) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_EMPLOYEE,
-                new Object[] {employeeID, aircraftID, airportID, jobID, firstName, lastName,
-                    dateHired, employeeID});
+                new Object[] {Integer.parseInt(employeeID), Integer.parseInt(flightNumber),
+                    airportID, Integer.parseInt(jobID), firstName, lastName, dateHired,
+                    Integer.parseInt(employeeID)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -575,7 +623,7 @@ public class DB implements IDB {
     }
 
     public int updateContact(String contactID, String firstName, String lastName,
-        Double phoneNumber, String email, String relationship) {
+        String phoneNumber, String email, String relationship) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_CONTACT,
                 new Object[] {
@@ -608,19 +656,20 @@ public class DB implements IDB {
     }
 
     // TODO: ADD PRIMARY KEY
-    public int updateReservation(String reservationID, int luggageWeight, int seatNumber,
-        String accommodations, String aircraftID, String invoiceID, Boolean insurance) {
+    public int updateReservation(String reservationID, int seatNumber, String accommodations,
+        String flightNumber, String invoiceID, Boolean insurance) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_RESERVATION,
-                new Object[] {reservationID, luggageWeight, seatNumber, accommodations, aircraftID,
-                    invoiceID, insurance, reservationID});
+                new Object[] {reservationID, seatNumber, accommodations,
+                    Integer.parseInt(flightNumber), Integer.parseInt(invoiceID), insurance,
+                    reservationID});
             return i;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int updateCancellation(String reservationID, Date cancelDate) {
+    public int updateCancellation(String reservationID, String cancelDate) {
         try {
             int i = jdbcTemplate.update(
                 Constants.UPDATE_CANCELLATION, new Object[] {reservationID, cancelDate});
@@ -656,11 +705,10 @@ public class DB implements IDB {
     }
 
     // TODO: ADD PRIMARY KEY
-    public int updateMembership(
-        String membershipID, Double discount, String customerID, String type) {
+    public int updateMembership(String membershipID, Double discount, String type) {
         try {
             int i = jdbcTemplate.update(Constants.UPDATE_MEMBERSHIP,
-                new Object[] {membershipID, discount, customerID, type, membershipID});
+                new Object[] {membershipID, discount, type, membershipID});
             return i;
         } catch (Exception e) {
             throw e;
@@ -678,7 +726,8 @@ public class DB implements IDB {
 
     public int deleteFlight(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_FLIGHT, new Object[] {key});
+            int i =
+                jdbcTemplate.update(Constants.DELETE_FLIGHT, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -687,7 +736,8 @@ public class DB implements IDB {
 
     public int deleteAircraft(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_AIRCRAFT, new Object[] {key});
+            int i = jdbcTemplate.update(
+                Constants.DELETE_AIRCRAFT, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -696,7 +746,8 @@ public class DB implements IDB {
 
     public int deleteEmployee(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_EMPLOYEE, new Object[] {key});
+            int i = jdbcTemplate.update(
+                Constants.DELETE_EMPLOYEE, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -705,7 +756,8 @@ public class DB implements IDB {
 
     public int deleteContact(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_CONTACT, new Object[] {key});
+            int i =
+                jdbcTemplate.update(Constants.DELETE_CONTACT, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -714,7 +766,7 @@ public class DB implements IDB {
 
     public int deleteJob(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_JOB, new Object[] {key});
+            int i = jdbcTemplate.update(Constants.DELETE_JOB, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -723,7 +775,8 @@ public class DB implements IDB {
 
     public int deletePayment(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_PAYMENT, new Object[] {key});
+            int i =
+                jdbcTemplate.update(Constants.DELETE_PAYMENT, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -732,7 +785,8 @@ public class DB implements IDB {
 
     public int deleteReservation(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_RESERVATION, new Object[] {key});
+            int i = jdbcTemplate.update(
+                Constants.DELETE_RESERVATION, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -741,7 +795,8 @@ public class DB implements IDB {
 
     public int deleteCancellation(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_CANCELLATION, new Object[] {key});
+            int i = jdbcTemplate.update(
+                Constants.DELETE_CANCELLATION, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -750,7 +805,8 @@ public class DB implements IDB {
 
     public int deletePlaneService(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_SERVICE, new Object[] {key});
+            int i =
+                jdbcTemplate.update(Constants.DELETE_SERVICE, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -759,7 +815,8 @@ public class DB implements IDB {
 
     public int deleteCustomer(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_CUSTOMER, new Object[] {key});
+            int i = jdbcTemplate.update(
+                Constants.DELETE_CUSTOMER, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;
@@ -768,7 +825,8 @@ public class DB implements IDB {
 
     public int deleteMembership(String key) {
         try {
-            int i = jdbcTemplate.update(Constants.DELETE_MEMBERSHIP, new Object[] {key});
+            int i = jdbcTemplate.update(
+                Constants.DELETE_MEMBERSHIP, new Object[] {Integer.parseInt(key)});
             return i;
         } catch (Exception e) {
             throw e;

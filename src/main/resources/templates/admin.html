@@ -25,6 +25,7 @@
                     <li class="tab"><a href="#add">Add</a></li>
                     <li class="tab"><a href="#update">Update</a></li>
                     <li class="tab"><a href="#delete">Delete</a></li>
+                    <li class="tab"><a href="#reserved">View Seats on Flight</a></li>
                 </ul>
             </div>
         </nav>
@@ -98,10 +99,60 @@
             <a id="delete-table" disabled class="btn-large waves-effect waves-light">delete</a>
         </div>
 
+        <div id="reserved">
+            <div class="col s4 valign-wrapper">
+                <h3 class="flow-text col s12 left-align">See reservations for the selected flight</h3>
+            </div>
+            <select id="table-name-select-flight" name="table">
+                <option th:each="flight : ${flights}" th:value="${flight.flightNumber}" th:text="${flight.flightNumber}"></option>
+            </select>
+                <table id="flight-table">
+                </table>
+        </div>
+
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript" src="js/admin.js"></script>
+            <script>
+                $('#table-name-select-flight').change(function() {
+                    $('#flight-table').empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/v1/getReservations',
+                        dataType: 'json',
+                        data: {
+                            flightNumber: $('#table-name-select-flight').val()
+                        },
+                        success: function(data) {
+                            if (data.length !== 0) {
+                                headers = Object.keys(data[0]);
+                                $('#flight-table').append('<thead></thead>');
+                                $('#flight-table thead').append('<tr></tr>');
+                                for (var i = 0; i < headers.length; i++) {
+                                    $('#flight-table thead tr')
+                                        .append('<td>' + headers[i] + '</td>');
+                                }
+                                $('#flight-table').append('<tbody></tbody>');
+
+                                for (var i = 0; i < data.length; i++) {
+                                    $('#flight-table tbody').append('<tr></tr>');
+                                    for (var j = 0; j < headers.length; j++) {
+                                        $('#flight-table tbody')
+                                            .append(
+                                                '<td>' + data[i]['' + headers[j] + ''] +
+                                                '</td>');
+                                    }
+                                }
+                            }
+                        },
+                        error: function(xhr) {
+                            console.error(xhr);
+                            console.error('Error retrieving data with ajax call');
+                        }
+                    });
+                });
+            </script>
     </body>
 </html>
 
