@@ -1,46 +1,82 @@
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--Import Google Icon Font-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-        <link href="css/main.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
 
-        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    </head>
-    <body>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
         <nav class="nav">
             <div class="nav-wrapper">
-                <a href="/" class="brand-logo">Regal Airways</a>
+                <a href="#!" class="brand-logo">Regal Airways</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">FAQ</a></li>
+                </ul>
             </div>
         </nav>
-        <form action="/payment" th:action="@{/payment}" th:object="${flight}" method="post">
-            <p class="flow-text">Flights by availability:</p>
-            <div th:each="flight : ${flights}">
-                <input th:field="*{flightNumber}" th:value="${flight.flightNumber}" name="group1" type="radio" th:id="'flight-number-'+ ${flight.flightNumber}" />
-                <label th:for="'flight-number-' + ${flight.flightNumber}" th:text="${flight.availability}"></label>
-                </p>
-                <!--
-                    <p th:text="${flight.flightNumber}"></p>
-                    <p th:text="${flight.terminalNumber}"></p>
-                    <p th:text="${flight.gate}"></p>
-                    <p th:text="${flight.routing}"></p>
-                    <p th:text="${flight.arrival}"></p>
-                    <p th:text="${flight.departing}"></p>
-                    <p th:text="${flight.availability}"></p>
-                    <p th:text="${flight.status}"></p>
-                    <p th:text="${flight.cost}"></p>
-                -->
+    
+        <div class="container">
+                <h1 class="header center slogan">Flights</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light">Flights by availability</h5>
+                </div>
             </div>
-            <input type="submit" value="Book Flight" class="btn-large waves-effect waves-light" />
-        </form>
-    </body>
-    <script>
-    $(document).ready(function() {
-        $('input[type=radio][name=group1]').change(function() {
-            console.log($(this).text());
-            console.log(this.value);
-        });
+
+    <div class = "row col s9">
+    <form action="/payment" th:action="@{/payment}" th:object="${flight}" method="post">
+        
+        <div class = "row col s12 ">
+            <div class="col s1"></div>
+            <p class="col s1">Flight Number:</p>
+            <p class="col s1">Terminal:</p>
+            <p class="col s1">Gate:</p>
+            <p class="col s1">Routing:</p>
+            <p class="col s1">Arrival:</p>
+            <p class="col s1">Arrival Time:</p>
+            <p class="col s1">Departing:</p>
+            <p class="col s1">Departing Time:</p>
+            <p class="col s1">Availability:</p>
+            <p class="col s1">Status:</p>
+            <p class="col s1">Cost:</p>
+        </div>
+        <div class= "row col s12">
+        <div class = "row col s12" th:each="flight : ${flights}">
+            <input  class="col s1 valign-wrapper" th:field="*{flightNumber}" th:value="${flight.flightNumber}" name="group1" type="radio" th:id="'flight-number-'+ ${flight.flightNumber}" />
+            <label  class = "col s1 valign-wrapper" th:for="'flight-number-' + ${flight.flightNumber}" th:text="${flight.availability}"></label>
+            
+                <p class = "col s1" th:text="${flight.flightNumber}"></p>
+                <p class = "col s1" th:text="${flight.terminalNumber}"></p>
+                <p class = "col s1" th:text="${flight.gate}"></p>
+                <p class = "col s1" th:text="${flight.routing}"></p>
+                <p class = "col s1" th:text="${flight.arrival}"></p>
+                <p class = "col s1" th:text="${flight.arrivalTime}"></p>
+                <p class = "col s1" th:text="${flight.departing}"></p>
+                <p class = "col s1" th:text="${flight.departTime}"></p>
+                <p class = "col s1" th:text="${flight.availability}"></p>
+                <p class = "col s1" th:text="${flight.status}"></p>
+                <p class = "col s1" th:text="${flight.cost}"></p>
+            </div>
+        </div>
+        <div class = "row"></div>
+        <div class="row center">
+                <input type="submit" value="Book Flight" class="btn-large waves-effect waves-light" />
+        </div>
+    </form>
+</div>
+</body>
+<script>
+$(document).ready(function() {
+    $('input[type=radio][name=group1]').change(function() {
+        console.log($(this).text());
+        console.log(this.value);
     });
-    </script>
+});
+</script>
 </html>
