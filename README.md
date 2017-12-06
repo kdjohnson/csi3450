@@ -50,6 +50,7 @@
   * open `src/main/resources/application.properties`
   * Change `spring.datasource.initialize=true` to
     `spring.datasource.initialize=false`
+* This will prevent the build process from attempting to create the schema and populate the database.
 
 ## Tested on
 
